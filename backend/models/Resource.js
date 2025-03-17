@@ -18,7 +18,7 @@ const ResourceSchema = new mongoose.Schema({
         type: String,
         required: [true, "Supplier Required"]
     },
-    project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' }
+    project: { type: mongoose.Schema.Types.ObjectId, ref: "Project" }
 });
 
 const ResourceModel = mongoose.model("Resource", ResourceSchema);

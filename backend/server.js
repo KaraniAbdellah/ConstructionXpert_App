@@ -15,8 +15,8 @@ rest_api.use(express.json());
 rest_api.use(cors());
 rest_api.use("/project", ProjectRoute);
 rest_api.use("/task", TaskRoute);
-rest_api.use("/user", UserRoute);
 rest_api.use("/resource", ResourceRoute);
+rest_api.use("/user", UserRoute);
 
 
 
