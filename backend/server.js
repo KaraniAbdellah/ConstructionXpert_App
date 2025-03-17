@@ -9,7 +9,7 @@ import ProjectRoute from "./routes/ProjectRoute.js";
 import ResourceRoute from "./routes/ResourceRoute.js";
 
 
-// Create Rest API
+// Create REST API
 const rest_api = express();
 rest_api.use(express.json());
 rest_api.use(cors());
