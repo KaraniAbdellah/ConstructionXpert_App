@@ -1,6 +1,7 @@
 // Header.jsx
 import React from "react";
 import logo from "../../assets/logo1.png";
+import { Link } from "react-router";
 
 const Header = () => {
   return (
@@ -13,17 +14,25 @@ const Header = () => {
             className="h-[40px] w-[40px]"
           />
         </div>
-        <nav className="flex space-x-6">
-          <button className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
-            Home
-          </button>
-          <button className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
-            FAQ
-          </button>
-          <button className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
-            Pricing
-          </button>
-          <button className="button">Register now</button>
+        <nav className="flex space-x-6 items-center">
+          <Link to="/">
+            <button className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
+              Home
+            </button>
+          </Link>
+          <Link to="/faq">
+            <button className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
+              FAQ
+            </button>
+          </Link>
+          <Link to="pricing">
+            <button className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
+              Pricing
+            </button>
+          </Link>
+          <Link to="/register">
+            <button className="button">Register now</button>
+          </Link>
         </nav>
       </div>
     </header>
