@@ -1,0 +1,20 @@
+.bg {
+  z-index: -1;
+  width: 100%;
+  height: 100vh;
+  /* Add your background pattern here */
+  --size: 80px; /* control the size */
+  --color: #fefae0;
+
+  --l: var(--color) 20%, #0000 0;
+  --bg: 35%, #d1c0b644 0 45%, var(--color) 0;
+  background: linear-gradient(
+      45deg,
+      var(--l) 45%,
+      var(--color) 0 70%,
+      #db777700 0
+    ),
+    linear-gradient(-45deg, var(--l) var(--bg) 70%, #0000 0),
+    linear-gradient(45deg, var(--color) var(--bg));
+  background-size: var(--size) var(--size);
+}
