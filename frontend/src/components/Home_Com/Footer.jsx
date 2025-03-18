@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-zinc-800 text-white py-12">
+    <footer className="bg-zinc-800 text-white pt-12">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8">
           <div>
@@ -90,7 +90,7 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+        <div className="border-t border-gray-700 py-2 text-center">
           <p>
             &copy; <span>{new Date().getFullYear()}</span> ConstructionXpert
             Services. All rights reserved.

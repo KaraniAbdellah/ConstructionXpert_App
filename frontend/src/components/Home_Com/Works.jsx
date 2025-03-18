@@ -9,6 +9,7 @@ export default function Works() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">How it works</h2>
           <div className="max-w-4xl mx-auto">
+
             <div className="flex flex-col md:flex-row items-center mb-12">
               <div className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
                 <div className="bg-zinc-800 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">1</div>
@@ -49,6 +50,7 @@ export default function Works() {
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       </div>
