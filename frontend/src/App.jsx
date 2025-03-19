@@ -8,7 +8,7 @@ import Auth from "./components/auth/Auth";
 import "./css_styles/bg.css";
 
 function App() {
-  const user = false; // user is login
+  const user = true; // user is login
   return (
     <div className="w-full relative min-h-screen">
       <div>

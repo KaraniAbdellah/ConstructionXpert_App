@@ -1,7 +1,12 @@
-import React from 'react'
+import React from 'react';
+import Project from "./Project";
+import Task from "./Task";
+import Resource from "./Resource";
 
 export default function Main() {
   return (
-    <div>Here You Can Manager Your Projects</div>
+    <div>
+      <Project></Project>
+    </div>
   );
 }
