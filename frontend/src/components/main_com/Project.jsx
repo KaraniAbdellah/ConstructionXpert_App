@@ -24,6 +24,13 @@ export default function Project() {
     setRenderProjectFrom(true);
   };
 
+  const handleDelete = () => {
+
+  }
+  const handleEdit = () => {
+    setRenderProjectFrom(true); 
+  }
+
   return (
     <div
       className={`p-5 ${
@@ -56,40 +63,48 @@ export default function Project() {
       )}
 
       {/* Project Details */}
-      <div className="projects mt-5 space-y-4">
-        <div className="project bg-zinc-100 p-4 rounded-xl shadow-md">
-          <p className="project_name bg-zinc-700 p-2 rounded-t-md text-white text-xl font-semibold">
-            Project Name
-          </p>
-          <div className="p-2">
-            <p className="description text-gray-600 mt-2">Description</p>
-
-            <div className="duration flex items-center gap-2 mt-4 text-gray-700">
-              <Timer size={20} />
-              <div className="info">
-                <p className="text-sm font-medium">Project Duration</p>
-                <p className="text-xs">01/03/2025 - 01/03/2025</p>
-              </div>
+      <div className="projects mt-5 grid md:grid-cols-6 gap-6">
+        {[...Array(3)].map((_, index) => (
+          <div
+            key={index}
+            className="project z-[-1] bg-zinc-100 p-4 rounded-xl col-span-2 shadow-lg"
+          >
+            <div className="bg-zinc-700 p-3 rounded-t-md flex justify-between items-center">
+              <p className=" text-white text-lg font-bold">
+                Project Name
+              </p>
+              <p className="task_stage bg-red-100 p-2 rounded-full">In Progress</p>
             </div>
+            <div className="p-3 space-y-4">
+              <p className="text-gray-600">Description</p>
 
-            <div className="budget flex items-center gap-2 mt-3 text-gray-700">
-              <HandCoins size={20} />
-              <div className="info">
-                <p className="text-sm font-medium">Budget</p>
-                <p className="text-xs">2,90</p>
+              <div className="flex items-center gap-2 text-gray-700">
+                <Timer size={20} />
+                <div>
+                  <p className="text-sm font-medium">Project Duration</p>
+                  <p className="text-xs">01/03/2025 - 01/03/2025</p>
+                </div>
               </div>
-            </div>
 
-            <div className="btns flex justify-between items-center mt-5">
-              <button className="bg-yellow-200 text-yellow-800 font-semibold transition-all px-4 py-2 rounded-lg shadow hover:bg-yellow-300 flex items-center">
-                <FilePenLine className="mr-2" size={20} /> Edit
-              </button>
-              <button className="bg-red-200 text-red-800 font-semibold transition-all px-4 py-2 rounded-lg shadow hover:bg-red-300 flex items-center">
-                <Trash2 className="mr-2" size={20} /> Delete
-              </button>
+              <div className="flex items-center gap-2 text-gray-700">
+                <HandCoins size={20} />
+                <div>
+                  <p className="text-sm font-medium">Budget</p>
+                  <p className="text-xs">2,90</p>
+                </div>
+              </div>
+
+              <div className="flex justify-between mt-4">
+                <button onClick={() => handleEdit()} className="bg-yellow-300 w-[45%] text-yellow-900 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-yellow-400 flex justify-center items-center transition">
+                  <FilePenLine className="mr-2" size={18} /> Edit
+                </button>
+                <button onClick={() => handleDelete()} className="bg-red-300 w-[45%]  text-red-900 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-red-400 flex items-center justify-center transition">
+                  <Trash2 className="mr-2" size={18} /> Delete
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
