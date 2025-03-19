@@ -1,4 +1,7 @@
 import ProjectModel from "../models/Project.js";
+import TaskModel from "../models/Task.js";
+import ResourceModel from "../models/Resource.js";
+
 
 const createProject = async (req, res) => {
     try {
@@ -37,7 +40,22 @@ const UpdateProject = async (req, res) => {
 const DeleteProject = async (req, res) => {
     try {
         const ProjectId = req.params.id;
+        console.log(ProjectId);
+        // Delete The Project
         const project = await ProjectModel.findByIdAndDelete(ProjectId, req.body);
+
+        // Delete the resources corresponding to this project
+        const resources = await ResourceModel.find({project: ProjectId});
+        resources.map(async (resource) => {
+            await ResourceModel.findByIdAndDelete(resource._id);
+        });
+
+        // Delete the task corresponding to this project
+        const tasks = await TaskModel.find({project: ProjectId});
+        tasks.map(async (resource) => {
+            await TaskModel.findByIdAndDelete(resource._id);
+        });
+
         res.status(200).send(project);
         console.log("✅ Deletting Projects Succefully");
     } catch (error) {
