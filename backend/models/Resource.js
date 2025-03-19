@@ -18,7 +18,14 @@ const ResourceSchema = new mongoose.Schema({
         type: String,
         required: [true, "Supplier Required"]
     },
-    project: { type: mongoose.Schema.Types.ObjectId, ref: "Project" }
+    Task: { 
+        type: String,
+        required: [true, "Task Required"]
+    },
+    Project: {
+        type: String,
+        required: [true, "Project Required"]
+    }
 });
 
 const ResourceModel = mongoose.model("Resource", ResourceSchema);

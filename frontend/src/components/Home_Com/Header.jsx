@@ -25,12 +25,12 @@ const Header = () => {
               FAQ
             </button>
           </Link>
-          <Link to="pricing">
+          <Link to="/pricing">
             <button className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
               Pricing
             </button>
           </Link>
-          <Link to="/register">
+          <Link to="/auth">
             <button className="button">Register now</button>
           </Link>
         </nav>

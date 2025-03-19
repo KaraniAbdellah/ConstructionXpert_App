@@ -2,6 +2,10 @@
 import mongoose from "mongoose";
 
 const TaskSchema = new mongoose.Schema({
+    Project: {
+        type: String,
+        required: true
+    },
     Name: {
         type: String, 
         required: [true, "Name Required"]
@@ -13,8 +17,7 @@ const TaskSchema = new mongoose.Schema({
     TaskStage: {
         type: String,
         required: [true, "Task Stage Required"]
-    },
-    project: { type: mongoose.Schema.Types.ObjectId, ref: "Project" }
+    }
 });
 
 const TaskModel = mongoose.model("Task", TaskSchema);

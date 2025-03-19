@@ -45,13 +45,13 @@ const DeleteProject = async (req, res) => {
         const project = await ProjectModel.findByIdAndDelete(ProjectId, req.body);
 
         // Delete the resources corresponding to this project
-        const resources = await ResourceModel.find({project: ProjectId});
+        const resources = await ResourceModel.find({Project: ProjectId});
         resources.map(async (resource) => {
             await ResourceModel.findByIdAndDelete(resource._id);
         });
 
         // Delete the task corresponding to this project
-        const tasks = await TaskModel.find({project: ProjectId});
+        const tasks = await TaskModel.find({Project: ProjectId});
         tasks.map(async (resource) => {
             await TaskModel.findByIdAndDelete(resource._id);
         });

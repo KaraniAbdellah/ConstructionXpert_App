@@ -28,10 +28,7 @@ const ProjectSchema = new mongoose.Schema({
     Budget: {
         type: Number, 
         required: [true, "Budget Required"]
-    },
-    // These arrays store only the IDs
-    tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
-    resources: [{ type: mongoose.Schema.Types.ObjectId, ref: "Resource" }]
+    }
 });
 
 const ProjectModel = mongoose.model("Project", ProjectSchema);
