@@ -7,10 +7,7 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProjectData({
-      ...projectData,
-      [name]: value,
-    });
+    setProjectData({...projectData,[name]: value,});
   };
 
   const handleAdminAdd = () => {

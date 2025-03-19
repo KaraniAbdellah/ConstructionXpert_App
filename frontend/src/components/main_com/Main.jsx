@@ -5,7 +5,7 @@ import Resource from "./Resource";
 
 export default function Main() {
   return (
-    <div>
+    <div className='relative'>
       <Project></Project>
     </div>
   );
