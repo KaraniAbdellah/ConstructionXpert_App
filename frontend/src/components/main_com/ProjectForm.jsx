@@ -1,36 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function ProjectForm({ setRenderProjectFrom, setProjectData, projectData }) {
-
-
+export default function ProjectForm({ setRenderProjectFrom, setProjectData, projectData, isEdit, setIsEdit}) {
   const [newAdmin, setNewAdmin] = useState("");
+  const [Admins, setAdmins] = useState([]);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [task_stage, setTask_Stage] = useState("");
+  const [start_Date, setStart_Date] = useState(new Date());
+  const [end_Date, setEnd_Date] = useState(new Date());
+  const [budget, setBudget] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProjectData({...projectData,[name]: value,});
-  };
-
-  const handleAdminAdd = () => {
-    if (newAdmin.trim()) {
-      setProjectData({
-        ...projectData,
-        Admins: [...projectData.Admins, newAdmin.trim()],
-      });
-      setNewAdmin("");
-    }
-  };
-
-  const removeAdmin = (adminToRemove) => {
-    setProjectData({
-      ...projectData,
-      Admins: projectData.Admins.filter((admin) => admin !== adminToRemove),
-    });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Project data to submit:", projectData);
-    setRenderProjectFrom(false);
+    
+    // setRenderProjectFrom(false);
+    console.log(Admins); console.log(name); console.log(description); console.log(task_stage);
+    console.log(start_Date); console.log(end_Date); console.log(budget);
+
+    setProjectData((projectData) => [...projectData, {
+      id: new Date().getTime(),
+      Name: name,
+      Description: description,
+      TaskStage: task_stage,
+      Admins: Admins,
+      StartDate: start_Date,
+      EndDate: end_Date,
+      Budget: budget,
+    }]);
     console.log(projectData);
   };
 
@@ -38,10 +35,18 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
     setRenderProjectFrom(false);
   };
 
+  const removeAdmin = () => {
+    setAdmins(Admins.filter((admin) => admin != newAdmin));
+  }
+
+  useEffect(() => {
+
+  });
+
   return (
     <div className="bg-gray-50 z-50 px-8 py-6 top-[50px] md:w-[60%] w-[90%] absolute -translate-x-1/2 transform left-1/2  rounded-lg shadow-md">
       <h2 className="text-xl font-bold text-gray-800 mb-4">
-        Create New Project
+        {isEdit ? "Update Project" : "Create New Project"}
       </h2>
 
       <form onSubmit={handleSubmit}>
@@ -56,9 +61,9 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
             <input
               type="text"
               id="Name"
-              name="Name"
-              value={projectData.Name}
-              onChange={handleChange}
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
               required
             />
@@ -74,12 +79,11 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
             <select
               id="TaskStage"
               name="TaskStage"
-              value={projectData.TaskStage}
-              onChange={handleChange}
+              value={task_stage}
+              onChange={(e) => setTask_Stage(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
               required
             >
-              <option value="Planning">Planning</option>
               <option value="In Progress">In Progress</option>
               <option value="Review">Review</option>
               <option value="Completed">Completed</option>
@@ -98,8 +102,8 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
             <textarea
               id="Description"
               name="Description"
-              value={projectData.Description}
-              onChange={handleChange}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
               required
             />
@@ -111,23 +115,23 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
             <div className="flex mb-1">
               <input
                 type="text"
-                value={newAdmin}
+                required
                 onChange={(e) => setNewAdmin(e.target.value)}
                 className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
                 placeholder="Enter admin name or email"
               />
               <button
                 type="button"
-                onClick={handleAdminAdd}
+                onClick={() => setAdmins((Admins) => [...Admins, newAdmin])}
                 className="px-4 py-2 bg-zinc-600 text-white rounded-r-md hover:bg-zinc-700"
               >
                 Add
               </button>
             </div>
             <div className="mt-2">
-              {projectData.Admins.length > 0 ? (
+              {Admins.length > 0 ? (
                 <div className="flex flex-wrap gap-2">
-                  {projectData.Admins.map((admin, index) => (
+                  {Admins.map((admin, index) => (
                     <div
                       key={index}
                       className="flex items-center bg-zinc-100 px-3 py-1 rounded-full"
@@ -135,7 +139,7 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
                       <span className="text-zinc-800 text-sm">{admin}</span>
                       <button
                         type="button"
-                        onClick={() => removeAdmin(admin)}
+                        onClick={(e) => removeAdmin(e)}
                         className="ml-2 text-zinc-800 hover:text-zinc-900"
                       >
                         ×
@@ -162,8 +166,8 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
               type="date"
               id="StartDate"
               name="StartDate"
-              value={projectData.StartDate}
-              onChange={handleChange}
+              value={start_Date}
+              onChange={(e) => setStart_Date(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
               required
             />
@@ -179,8 +183,8 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
               type="date"
               id="EndDate"
               name="EndDate"
-              value={projectData.EndDate}
-              onChange={handleChange}
+              value={end_Date}
+              onChange={(e) => setEnd_Date(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
               required
             />
@@ -202,8 +206,8 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
               type="number"
               id="Budget"
               name="Budget"
-              value={projectData.Budget}
-              onChange={handleChange}
+              value={budget}
+              onChange={(e) => setBudget(e.target.value)}
               className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
               placeholder="0.00"
               min="0"

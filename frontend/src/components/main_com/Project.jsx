@@ -2,34 +2,35 @@ import React, { useState } from "react";
 import ProjectForm from "./ProjectForm";
 import {
   CirclePlus,
-  Calendar,
   Trash2,
   FilePenLine,
   Timer,
   HandCoins,
+  User,
+  Info,
 } from "lucide-react";
 
 export default function Project() {
   const [RenderProjectFrom, setRenderProjectFrom] = useState(false);
-  const [projectData, setProjectData] = useState({
-    Name: "",
-    Description: "",
-    TaskStage: "Planning",
-    Admins: [],
-    StartDate: "",
-    EndDate: "",
-    Budget: "",
-  });
+  const [projectData, setProjectData] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+
   const RenderProjectFromFun = () => {
     setRenderProjectFrom(true);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    const projectEle = e.target.parentElement.parentElement.parentElement;
+    const projectId = projectEle.getAttribute("id");
+    setProjectData(projectData.filter((project) => project.id != Number(projectId)));
+    console.log(projectData.filter((project) => project.id != Number(projectId)));
+  };
 
-  }
-  const handleEdit = () => {
-    setRenderProjectFrom(true); 
-  }
+  const handleEdit = (e) => {
+    setRenderProjectFrom(true);
+    setIsEdit(true);
+    console.log(e);
+  };
 
   return (
     <div
@@ -57,49 +58,97 @@ export default function Project() {
           projectData={projectData}
           setProjectData={setProjectData}
           setRenderProjectFrom={setRenderProjectFrom}
+          isEdit={isEdit}
+          setIsEdit={setIsEdit}
         ></ProjectForm>
       ) : (
         ""
       )}
 
-      {/* Project Details */}
-      <div className="projects mt-5 grid md:grid-cols-6 gap-6">
-        {[...Array(3)].map((_, index) => (
+      <div className="projects mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {projectData.map((project, index) => (
           <div
             key={index}
-            className="project z-[-1] bg-zinc-100 p-4 rounded-xl col-span-2 shadow-lg"
+            id={project.id}
+            className={`project bg-zinc-100 px-3 pt-3 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300
+          ${RenderProjectFrom ? "z-[-1]" : "z-50"}`}
           >
-            <div className="bg-zinc-700 p-3 rounded-t-md flex justify-between items-center">
-              <p className=" text-white text-lg font-bold">
-                Project Name
+            <div className="bg-gray-200 p-3 rounded-t-md flex justify-between items-center">
+              <p className="text-zinc-700 text-lg font-bold truncate">
+                {project.Name}
               </p>
-              <p className="task_stage bg-red-100 p-2 rounded-full">In Progress</p>
+              <p
+                className={`task_stage px-3 py-1 rounded-full text-sm font-medium ${
+                  project.TaskStage === "In Progress"
+                    ? "text-yellow-700 bg-yellow-100"
+                    : project.TaskStage === "Review"
+                    ? "text-blue-700 bg-blue-100"
+                    : project.TaskStage === "Completed"
+                    ? "text-green-700 bg-green-100"
+                    : ""
+                }`}
+              >
+                {project.TaskStage}
+              </p>
             </div>
-            <div className="p-3 space-y-4">
-              <p className="text-gray-600">Description</p>
 
-              <div className="flex items-center gap-2 text-gray-700">
-                <Timer size={20} />
+            <div className="p-4 space-y-4">
+              <p className="text-gray-600 text-sm">{project.Description}</p>
+
+              <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                 <div>
-                  <p className="text-sm font-medium">Project Duration</p>
-                  <p className="text-xs">01/03/2025 - 01/03/2025</p>
+                  <div className="flex items-center gap-2 mb-3 text-gray-700">
+                    <Timer size={18} />
+                    <div>
+                      <p className="text-sm font-medium">Project Duration</p>
+                      <p className="text-xs">
+                        {project.StartDate} - {project.EndDate}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-700">
+                    <HandCoins size={18} />
+                    <div>
+                      <p className="text-sm font-medium">Budget</p>
+                      <p className="text-xs">{project.Budget}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex text-zinc-700 items-center">
+                  <User size={18} className="mr-2" />
+                  <div className="admins flex flex-wrap items-center gap-2">
+                    {project.Admins.map((admin, index) => (
+                      <p
+                        className="bg-slate-300 px-2 py-1 rounded-full text-xs"
+                        key={index}
+                      >
+                        {admin}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-gray-700">
-                <HandCoins size={20} />
-                <div>
-                  <p className="text-sm font-medium">Budget</p>
-                  <p className="text-xs">2,90</p>
-                </div>
-              </div>
-
-              <div className="flex justify-between mt-4">
-                <button onClick={() => handleEdit()} className="bg-yellow-300 w-[45%] text-yellow-900 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-yellow-400 flex justify-center items-center transition">
-                  <FilePenLine className="mr-2" size={18} /> Edit
+              <div className="flex justify-end mt-4 gap-3">
+                <button
+                  onClick={(e) => handleDelete(e)}
+                  type="button"
+                  className="text-white bg-red-600 hover:bg-red-700 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-red-300 rounded-full text-sm"
+                >
+                  <Trash2 size={16} />
                 </button>
-                <button onClick={() => handleDelete()} className="bg-red-300 w-[45%]  text-red-900 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-red-400 flex items-center justify-center transition">
-                  <Trash2 className="mr-2" size={18} /> Delete
+                <button
+                  onClick={(e) => handleEdit(e)}
+                  type="button"
+                  className="text-white bg-yellow-500 hover:bg-yellow-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-full text-sm"
+                >
+                  <FilePenLine size={16} />
+                </button>
+                <button
+                  type="button"
+                  className="text-white bg-zinc-500 hover:bg-zinc-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-full text-sm"
+                >
+                  <Info size={16} />
                 </button>
               </div>
             </div>
