@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast, Toaster } from "react-hot-toast";
 
-
-export default function ProjectForm({ setRenderProjectFrom, setProjectData, projectData, isEdit, setIsEdit, currentProject }) {
+export default function ProjectForm({
+  setRenderProjectFrom,
+  setProjectData,
+  projectData,
+  isEdit,
+  setIsEdit,
+  currentProject,
+}) {
   const [newAdmin, setNewAdmin] = useState("");
   const [Admins, setAdmins] = useState([]);
   const [name, setName] = useState("");
@@ -25,7 +32,6 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
     }
   }, [isEdit, currentProject]);
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const project = {
@@ -39,42 +45,56 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
     };
     if (isEdit && currentProject) {
       // Update existing project
-      setProjectData(projectData.map(project => 
-        project.id === currentProject.id 
-          ? {
-              ...project,
-              Name: name,
-              Description: description,
-              TaskStage: task_stage,
-              Admins: Admins,
-              StartDate: start_Date,
-              EndDate: end_Date,
-              Budget: budget,
-            }
-          : project
-      ));
+      setProjectData(
+        projectData.map((project) =>
+          project.id === currentProject.id
+            ? {
+                ...project,
+                Name: name,
+                Description: description,
+                TaskStage: task_stage,
+                Admins: Admins,
+                StartDate: start_Date,
+                EndDate: end_Date,
+                Budget: budget,
+              }
+            : project
+        )
+      );
 
-      axios.put(`http://127.0.0.1:3000/project/UpdateProject/${currentProject._id}`, project).then((res) => {
-        console.log(res.data);
-      });
+      axios
+        .put(
+          `http://127.0.0.1:3000/project/UpdateProject/${currentProject._id}`,
+          project
+        )
+        .then((res) => {
+          console.log(res.data);
+        });
+
+      toast.success("Product Updated Successfully!");
     } else {
       // Create new project
-      setProjectData([...projectData, {
-        Name: name,
-        Description: description,
-        TaskStage: task_stage,
-        Admins: Admins,
-        StartDate: start_Date,
-        EndDate: end_Date,
-        Budget: budget,
-      }]);
-      
+      setProjectData([
+        ...projectData,
+        {
+          Name: name,
+          Description: description,
+          TaskStage: task_stage,
+          Admins: Admins,
+          StartDate: start_Date,
+          EndDate: end_Date,
+          Budget: budget,
+        },
+      ]);
+
       // Add Project To Database
-      axios.post("http://127.0.0.1:3000/project/AddProject", project).then((res) => {
-        console.log(res.data);
-      });
+      axios
+        .post("http://127.0.0.1:3000/project/AddProject", project)
+        .then((res) => {
+          console.log(res.data);
+        });
     }
-    
+
     // Close form after submission
     setRenderProjectFrom(false);
   };
@@ -99,6 +119,7 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
 
   return (
     <div className="bg-gray-50 z-50 px-8 py-6 top-[50px] md:w-[60%] w-[90%] absolute -translate-x-1/2 transform left-1/2 rounded-lg shadow-md">
+      <Toaster position="top-center" reverseOrder={true} />
       <h2 className="text-xl font-bold text-gray-800 mb-4">
         {isEdit ? "Update Project" : "Create New Project"}
       </h2>
@@ -283,7 +304,7 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
             type="submit"
             className="px-4 py-2 bg-zinc-600 text-white rounded-md hover:bg-zinc-700"
           >
-            {isEdit ? "Update Project": "Create Project"}
+            {isEdit ? "Update Project" : "Create Project"}
           </button>
         </div>
       </form>
