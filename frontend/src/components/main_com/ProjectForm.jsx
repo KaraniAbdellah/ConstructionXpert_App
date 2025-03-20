@@ -1,50 +1,85 @@
 import React, { useEffect, useState } from "react";
 
-export default function ProjectForm({ setRenderProjectFrom, setProjectData, projectData, isEdit, setIsEdit}) {
+export default function ProjectForm({ setRenderProjectFrom, setProjectData, projectData, isEdit, setIsEdit, currentProject }) {
   const [newAdmin, setNewAdmin] = useState("");
   const [Admins, setAdmins] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [task_stage, setTask_Stage] = useState("");
-  const [start_Date, setStart_Date] = useState(new Date());
-  const [end_Date, setEnd_Date] = useState(new Date());
+  const [task_stage, setTask_Stage] = useState("In Progress");
+  const [start_Date, setStart_Date] = useState("");
+  const [end_Date, setEnd_Date] = useState("");
   const [budget, setBudget] = useState("");
 
+  // Load current project data if editing
+  useEffect(() => {
+    if (isEdit && currentProject) {
+      setName(currentProject.Name);
+      setDescription(currentProject.Description);
+      setTask_Stage(currentProject.TaskStage);
+      setAdmins(currentProject.Admins);
+      setStart_Date(currentProject.StartDate);
+      setEnd_Date(currentProject.EndDate);
+      setBudget(currentProject.Budget);
+    }
+  }, [isEdit, currentProject]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // setRenderProjectFrom(false);
-    console.log(Admins); console.log(name); console.log(description); console.log(task_stage);
-    console.log(start_Date); console.log(end_Date); console.log(budget);
 
-    setProjectData((projectData) => [...projectData, {
-      id: new Date().getTime(),
-      Name: name,
-      Description: description,
-      TaskStage: task_stage,
-      Admins: Admins,
-      StartDate: start_Date,
-      EndDate: end_Date,
-      Budget: budget,
-    }]);
-    console.log(projectData);
+    if (isEdit && currentProject) {
+      // Update existing project
+      setProjectData(projectData.map(project => 
+        project.id === currentProject.id 
+          ? {
+              ...project,
+              Name: name,
+              Description: description,
+              TaskStage: task_stage,
+              Admins: Admins,
+              StartDate: start_Date,
+              EndDate: end_Date,
+              Budget: budget,
+            }
+          : project
+      ));
+    } else {
+      // Create new project
+      setProjectData([...projectData, {
+        id: new Date().getTime(),
+        Name: name,
+        Description: description,
+        TaskStage: task_stage,
+        Admins: Admins,
+        StartDate: start_Date,
+        EndDate: end_Date,
+        Budget: budget,
+      }]);
+    }
+    
+    // Close form after submission
+    setRenderProjectFrom(false);
   };
 
   const handleCancel = () => {
     setRenderProjectFrom(false);
+    if (isEdit) {
+      setIsEdit(false);
+    }
   };
 
-  const removeAdmin = () => {
-    setAdmins(Admins.filter((admin) => admin != newAdmin));
-  }
+  const addAdmin = () => {
+    if (newAdmin.trim() !== "") {
+      setAdmins([...Admins, newAdmin]);
+      setNewAdmin("");
+    }
+  };
 
-  useEffect(() => {
-
-  });
+  const removeAdmin = (adminToRemove) => {
+    setAdmins(Admins.filter((admin) => admin !== adminToRemove));
+  };
 
   return (
-    <div className="bg-gray-50 z-50 px-8 py-6 top-[50px] md:w-[60%] w-[90%] absolute -translate-x-1/2 transform left-1/2  rounded-lg shadow-md">
+    <div className="bg-gray-50 z-50 px-8 py-6 top-[50px] md:w-[60%] w-[90%] absolute -translate-x-1/2 transform left-1/2 rounded-lg shadow-md">
       <h2 className="text-xl font-bold text-gray-800 mb-4">
         {isEdit ? "Update Project" : "Create New Project"}
       </h2>
@@ -115,14 +150,14 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
             <div className="flex mb-1">
               <input
                 type="text"
-                required
+                value={newAdmin}
                 onChange={(e) => setNewAdmin(e.target.value)}
                 className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
                 placeholder="Enter admin name or email"
               />
               <button
                 type="button"
-                onClick={() => setAdmins((Admins) => [...Admins, newAdmin])}
+                onClick={addAdmin}
                 className="px-4 py-2 bg-zinc-600 text-white rounded-r-md hover:bg-zinc-700"
               >
                 Add
@@ -139,7 +174,7 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
                       <span className="text-zinc-800 text-sm">{admin}</span>
                       <button
                         type="button"
-                        onClick={(e) => removeAdmin(e)}
+                        onClick={() => removeAdmin(admin)}
                         className="ml-2 text-zinc-800 hover:text-zinc-900"
                       >
                         ×
@@ -220,7 +255,7 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
         <div className="flex justify-end space-x-3">
           <button
             type="button"
-            onClick={() => handleCancel()}
+            onClick={handleCancel}
             className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
           >
             Cancel
@@ -229,11 +264,10 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
             type="submit"
             className="px-4 py-2 bg-zinc-600 text-white rounded-md hover:bg-zinc-700"
           >
-            Create Project
+            {isEdit ? "Update Project": "Create Project"}
           </button>
         </div>
       </form>
-
     </div>
   );
 }

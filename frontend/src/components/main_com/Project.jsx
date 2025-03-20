@@ -14,23 +14,26 @@ export default function Project() {
   const [RenderProjectFrom, setRenderProjectFrom] = useState(false);
   const [projectData, setProjectData] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
+  const [currentProject, setCurrentProject] = useState(null);
 
   const RenderProjectFromFun = () => {
     setRenderProjectFrom(true);
+    setIsEdit(false);
+    setCurrentProject(null);
   };
 
-  const handleDelete = (e) => {
-    const projectEle = e.target.parentElement.parentElement.parentElement;
-    const projectId = projectEle.getAttribute("id");
-    setProjectData(projectData.filter((project) => project.id != Number(projectId)));
-    console.log(projectData.filter((project) => project.id != Number(projectId)));
+  const handleDelete = (projectId) => {
+    setProjectData(projectData.filter((project) => project.id !== Number(projectId)));
   };
 
-  const handleEdit = (e) => {
+  const handleEdit = (projectId) => {
     setRenderProjectFrom(true);
     setIsEdit(true);
-    console.log(e);
+    const projectToEdit = projectData.find(project => project.id === Number(projectId));
+    setCurrentProject(projectToEdit);
   };
+
+  console.log(projectData);
 
   return (
     <div
@@ -60,6 +63,7 @@ export default function Project() {
           setRenderProjectFrom={setRenderProjectFrom}
           isEdit={isEdit}
           setIsEdit={setIsEdit}
+          currentProject={currentProject}
         ></ProjectForm>
       ) : (
         ""
@@ -131,14 +135,14 @@ export default function Project() {
 
               <div className="flex justify-end mt-4 gap-3">
                 <button
-                  onClick={(e) => handleDelete(e)}
+                  onClick={() => handleDelete(project.id)}
                   type="button"
                   className="text-white bg-red-600 hover:bg-red-700 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-red-300 rounded-full text-sm"
                 >
                   <Trash2 size={16} />
                 </button>
                 <button
-                  onClick={(e) => handleEdit(e)}
+                  onClick={() => handleEdit(project.id)}
                   type="button"
                   className="text-white bg-yellow-500 hover:bg-yellow-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-full text-sm"
                 >
