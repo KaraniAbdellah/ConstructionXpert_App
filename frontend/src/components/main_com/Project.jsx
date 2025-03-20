@@ -157,6 +157,7 @@ export default function Project() {
                 >
                   <Trash2 size={16} />
                 </button>
+                
                 <button
                   onClick={() => handleEdit(project._id)}
                   type="button"

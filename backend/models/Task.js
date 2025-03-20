@@ -17,7 +17,15 @@ const TaskSchema = new mongoose.Schema({
     TaskStage: {
         type: String,
         required: [true, "Task Stage Required"]
-    }
+    },
+    StartDate: {
+        type: Date,
+        required: [true, "Start Date Required"]
+    },
+    EndDate: {
+        type: Date,
+        required: [true, "End Date Required"]
+    },
 });
 
 const TaskModel = mongoose.model("Task", TaskSchema);

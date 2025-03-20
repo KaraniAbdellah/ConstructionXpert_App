@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
+import TaskForm from './TaskForm';
 
 export default function Task() {
   const {id} = useParams();
@@ -7,6 +8,10 @@ export default function Task() {
     
   });
   return (
-    <div>Task: {id}</div>
+    <>
+      <div>Task: {id}</div>
+      <TaskForm></TaskForm>
+    </>
+
   );
 }
