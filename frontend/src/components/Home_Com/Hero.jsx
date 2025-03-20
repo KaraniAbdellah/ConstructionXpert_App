@@ -12,7 +12,7 @@ export default function Hero() {
           <p className="text-xl md:text-2xl mb-8">
             The complete solution for managing your construction projects
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <Link to="/main">
               <button className="button">
                 Start Here

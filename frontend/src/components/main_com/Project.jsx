@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProjectForm from "./ProjectForm";
 import axios from "axios";
+import { Link } from "react-router";
 
 import {
   CirclePlus,
@@ -163,12 +164,14 @@ export default function Project() {
                 >
                   <FilePenLine size={16} />
                 </button>
-                <button
-                  type="button"
-                  className="text-white bg-zinc-500 hover:bg-zinc-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-full text-sm"
-                >
-                  <Info size={16} />
-                </button>
+                <Link to={`/projectDetails/${project._id}`}>
+                  <button
+                    type="button"
+                    className="text-white bg-zinc-500 hover:bg-zinc-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-full text-sm"
+                  >
+                    <Info size={16} />
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
