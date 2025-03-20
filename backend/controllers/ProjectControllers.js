@@ -9,18 +9,18 @@ const createProject = async (req, res) => {
         res.status(200).send(project);
         console.log("✅ Project Added Succefully");
     } catch (error) {
-        console.log("❌ Failed Adding Project ");
+        console.log("❌ Failed Adding Project " + error);
         res.status(400).send({message: "❌ Failed Adding Project" + error});
     }
 }
 
 const GetProjects = async (req, res) => {
     try {
-        const projects = await ProjectModel.find().populate('tasks').populate('resources');
+        const projects = await ProjectModel.find();
         res.status(200).send(projects);
         console.log("✅ Getting Projects Succefully");
     } catch (error) {
-        console.log("❌ Failed Getting Project");
+        console.log("❌ Failed Getting Project" + error);
         res.status(400).send({message: "❌ Failed Getting Project" + error});
     }
 }

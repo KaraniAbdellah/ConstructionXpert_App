@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 
 export default function ProjectForm({ setRenderProjectFrom, setProjectData, projectData, isEdit, setIsEdit, currentProject }) {
   const [newAdmin, setNewAdmin] = useState("");
@@ -45,7 +47,6 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
     } else {
       // Create new project
       setProjectData([...projectData, {
-        id: new Date().getTime(),
         Name: name,
         Description: description,
         TaskStage: task_stage,
@@ -54,6 +55,11 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
         EndDate: end_Date,
         Budget: budget,
       }]);
+      
+      // Add Project To Database
+      axios.post("http://127.0.0.1:3000/project/AddProject", projectData).then((res) => {
+        console.log(res.data);
+      })
     }
     
     // Close form after submission

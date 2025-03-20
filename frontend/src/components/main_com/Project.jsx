@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProjectForm from "./ProjectForm";
+import axios from "axios";
+
 import {
   CirclePlus,
   Trash2,
@@ -9,6 +11,7 @@ import {
   User,
   Info,
 } from "lucide-react";
+
 
 export default function Project() {
   const [RenderProjectFrom, setRenderProjectFrom] = useState(false);
@@ -23,17 +26,28 @@ export default function Project() {
   };
 
   const handleDelete = (projectId) => {
-    setProjectData(projectData.filter((project) => project.id !== Number(projectId)));
+    console.log(projectId);
+    
+    axios.delete(`http://127.0.0.1:3000/project/DeleteProject/${projectId}`).then((res) => {
+      console.log(res.data);
+    });
+
+    setProjectData(projectData.filter((project) => project._id !== (projectId)));
   };
 
   const handleEdit = (projectId) => {
     setRenderProjectFrom(true);
     setIsEdit(true);
-    const projectToEdit = projectData.find(project => project.id === Number(projectId));
+    const projectToEdit = projectData.find(project => project._id === Number(projectId));
     setCurrentProject(projectToEdit);
   };
 
-  console.log(projectData);
+  useEffect(() => {
+    axios.get("http://127.0.0.1:3000/project/GetProjects").then((res) => {
+      console.log(res.data);
+      setProjectData(res.data);
+    })
+  }, []);
 
   return (
     <div
@@ -69,11 +83,12 @@ export default function Project() {
         ""
       )}
 
+      {/* Project Details */}
       <div className="projects mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {projectData.map((project, index) => (
           <div
             key={index}
-            id={project.id}
+            id={project._id}
             className={`project bg-zinc-100 px-3 pt-3 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300
           ${RenderProjectFrom ? "z-[-1]" : "z-50"}`}
           >
@@ -135,14 +150,14 @@ export default function Project() {
 
               <div className="flex justify-end mt-4 gap-3">
                 <button
-                  onClick={() => handleDelete(project.id)}
+                  onClick={() => handleDelete(project._id)}
                   type="button"
                   className="text-white bg-red-600 hover:bg-red-700 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-red-300 rounded-full text-sm"
                 >
                   <Trash2 size={16} />
                 </button>
                 <button
-                  onClick={() => handleEdit(project.id)}
+                  onClick={() => handleEdit(project._id)}
                   type="button"
                   className="text-white bg-yellow-500 hover:bg-yellow-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-full text-sm"
                 >
@@ -159,6 +174,7 @@ export default function Project() {
           </div>
         ))}
       </div>
+
     </div>
   );
 }
