@@ -38,7 +38,7 @@ export default function Project() {
   const handleEdit = (projectId) => {
     setRenderProjectFrom(true);
     setIsEdit(true);
-    const projectToEdit = projectData.find(project => project._id === Number(projectId));
+    const projectToEdit = projectData.find(project => project._id === projectId);
     setCurrentProject(projectToEdit);
   };
 

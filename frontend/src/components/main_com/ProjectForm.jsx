@@ -25,9 +25,18 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
     }
   }, [isEdit, currentProject]);
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const project = {
+      Name: name,
+      Description: description,
+      TaskStage: task_stage,
+      Admins: Admins,
+      StartDate: start_Date,
+      EndDate: end_Date,
+      Budget: budget,
+    };
     if (isEdit && currentProject) {
       // Update existing project
       setProjectData(projectData.map(project => 
@@ -44,6 +53,10 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
             }
           : project
       ));
+
+      axios.put(`http://127.0.0.1:3000/project/UpdateProject/${currentProject._id}`, project).then((res) => {
+        console.log(res.data);
+      });
     } else {
       // Create new project
       setProjectData([...projectData, {
@@ -57,9 +70,9 @@ export default function ProjectForm({ setRenderProjectFrom, setProjectData, proj
       }]);
       
       // Add Project To Database
-      axios.post("http://127.0.0.1:3000/project/AddProject", projectData).then((res) => {
+      axios.post("http://127.0.0.1:3000/project/AddProject", project).then((res) => {
         console.log(res.data);
-      })
+      });
     }
     
     // Close form after submission
