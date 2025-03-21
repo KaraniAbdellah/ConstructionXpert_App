@@ -18,11 +18,11 @@ const ProjectSchema = new mongoose.Schema({
         required: [true, "Admins Required"]
     },
     StartDate: {
-        type: Date,
+        type: String,
         required: [true, "Start Date Required"]
     },
     EndDate: {
-        type: Date,
+        type: String,
         required: [true, "End Date Required"]
     },
     Budget: {

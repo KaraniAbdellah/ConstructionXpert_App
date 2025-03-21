@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast, Toaster } from "react-hot-toast";
 
 export default function ProjectForm({
   setRenderProjectFrom,
@@ -34,6 +33,7 @@ export default function ProjectForm({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const project = {
       Name: name,
       Description: description,
@@ -70,8 +70,6 @@ export default function ProjectForm({
         .then((res) => {
           console.log(res.data);
         });
-
-      toast.success("Product Updated Successfully!");
     } else {
       // Create new project
       setProjectData([
@@ -88,11 +86,20 @@ export default function ProjectForm({
       ]);
 
       // Add Project To Database
-      axios
-        .post("http://127.0.0.1:3000/project/AddProject", project)
-        .then((res) => {
+
+      async function getAndAddProjects() {
+        await axios
+          .post("http://127.0.0.1:3000/project/AddProject", project)
+          .then((res) => {
+            console.log(res.data);
+          });
+
+        await axios.get("http://127.0.0.1:3000/project/GetProjects").then((res) => {
           console.log(res.data);
+          setProjectData(res.data);
         });
+      }
+      getAndAddProjects();
     }
 
     // Close form after submission
@@ -119,7 +126,6 @@ export default function ProjectForm({
 
   return (
     <div className="bg-gray-50 z-50 px-8 py-6 top-[50px] md:w-[60%] w-[90%] absolute -translate-x-1/2 transform left-1/2 rounded-lg shadow-md">
-      <Toaster position="top-center" reverseOrder={true} />
       <h2 className="text-xl font-bold text-gray-800 mb-4">
         {isEdit ? "Update Project" : "Create New Project"}
       </h2>

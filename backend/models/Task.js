@@ -19,11 +19,11 @@ const TaskSchema = new mongoose.Schema({
         required: [true, "Task Stage Required"]
     },
     StartDate: {
-        type: Date,
+        type: String,
         required: [true, "Start Date Required"]
     },
     EndDate: {
-        type: Date,
+        type: String,
         required: [true, "End Date Required"]
     },
 });

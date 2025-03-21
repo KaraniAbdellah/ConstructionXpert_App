@@ -44,10 +44,13 @@ export default function Project() {
   };
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:3000/project/GetProjects").then((res) => {
-      console.log(res.data);
-      setProjectData(res.data);
-    })
+    async function getProjects() {
+      await axios.get("http://127.0.0.1:3000/project/GetProjects").then((res) => {
+        console.log(res.data);
+        setProjectData(res.data);
+      });
+    }
+    getProjects();
   }, []);
 
   return (

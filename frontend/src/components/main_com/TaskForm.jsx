@@ -1,30 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
-const TaskForm = ({ isEdit = false, initialData = {}, onSubmit, onCancel }) => {
-  const [name, setName] = useState(initialData.Name || '');
-  const [description, setDescription] = useState(initialData.Description || '');
-  const [taskStage, setTaskStage] = useState(initialData.TaskStage || 'In Progress');
-  const [startDate, setStartDate] = useState(initialData.StartDate ? new Date(initialData.StartDate).toISOString().split('T')[0] : '');
-  const [endDate, setEndDate] = useState(initialData.EndDate ? new Date(initialData.EndDate).toISOString().split('T')[0] : '');
+function TaskForm ({TaskData, setTaskData, setRenderTaskFrom, isEdit, setIsEdit, currentTask, Project }) {
+
+  // const [name, setName] = useState(currentTask.Name || '');
+  // const [description, setDescription] = useState(currentTask.Description || '');
+  // const [taskStage, setTaskStage] = useState(currentTask.TaskStage || 'In Progress');
+  // const [startDate, setStartDate] = useState(currentTask.StartDate ? new Date(currentTask.StartDate).toISOString().split('T')[0] : '');
+  // const [endDate, setEndDate] = useState(currentTask.EndDate ? new Date(currentTask.EndDate).toISOString().split('T')[0] : '');
+
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [taskStage, setTaskStage] = useState('In Progress');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     const taskData = {
+      Project: Project.Name,
       Name: name,
       Description: description,
       TaskStage: taskStage,
       StartDate: startDate,
       EndDate: endDate
     };
+    console.log(taskData);
     
-    onSubmit(taskData);
   };
 
   const handleCancel = () => {
-    onCancel();
+    setRenderTaskFrom(false);
   };
+
+  useEffect(() => {
+    // Get The Project
+
+  });
 
   return (
     <div className="bg-gray-50 z-50 px-8 py-6 top-[50px] md:w-[60%] w-[90%] absolute -translate-x-1/2 transform left-1/2 rounded-lg shadow-md">

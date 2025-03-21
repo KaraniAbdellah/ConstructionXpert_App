@@ -65,4 +65,15 @@ const DeleteProject = async (req, res) => {
 }
 
 
-export {createProject, GetProjects, UpdateProject, DeleteProject};
+const GetProjectById = async (req, res) => {
+    try {
+        const project = await ProjectModel.findById(req.params.id);
+        res.status(200).send(project);
+        console.log("✅ Getting Projects Succefully");
+    } catch (error) {
+        console.log("❌ Failed Getting Project" + error);
+        res.status(400).send({message: "❌ Failed Getting Project" + error});
+    }
+}
+
+export {createProject, GetProjects, UpdateProject, DeleteProject, GetProjectById};
