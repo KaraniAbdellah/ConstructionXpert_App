@@ -30,26 +30,20 @@ export default function Task() {
 
   return (
     <div className="p-4">
-      <header className="flex p-3 mb-4 flex-col md:flex-row justify-between mt-2 items-start md:items-center gap-4 bg-white rounded-full shadow-md ">
-        <div className="info flex-1 ml-2">
-          <h1 className="text-md font-bold text-gray-800">{Project.Name}</h1>
-          <p className="text-gray-600 mt-1 line-clamp-2">
-          {Project.Description}
-          </p>
-        </div>
+      <header className="flex p-2 mb-3 justify-between items-center md:items-center rounded-full bg-gray-50 shadow-sm border border-gray-100">
+      <div className="info">
+        <h1 className="text-xl ml-4 font-bold text-gray-800">{Project.Name}</h1>
+      </div>
 
-        <div className="duration rounded-full bg-zinc-100  p-3 shadow-sm">
-          <p className="text-sm font-medium text-zinc-700 mb-1">
-            Project Duration
+      <div className="duration rounded-full bg-zinc-600 px-4 py-3 shadow-md self-start">
+        <div className="flex items-center gap-2">
+          <Clock className="text-white" size={16} />
+          <p className="text-sm md:text-base text-white">
+            {Project.StartDate} - {Project.EndDate}
           </p>
-          <div className="flex items-center gap-2">
-            <Clock className="text-zinc-600" size={16} />
-            <p className="text-zinc-800">
-              {Project.StartDate} - {Project.EndDate}
-            </p>
-          </div>
         </div>
-      </header>
+      </div>
+    </header>
       <div className="tasks flex justify-end items-center">
         <button
           onClick={() => handleTaskFrom()}
