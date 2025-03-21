@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import TaskForm from "./TaskForm";
+import {Link} from "react-router";
 import {
   Clock,
   CirclePlus,
@@ -16,11 +17,27 @@ export default function Task() {
   const [RenderTaskFrom, setRenderTaskFrom] = useState(false);
   const [TaskData, setTaskData] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
-  const [currentTask, setCurrentTask] = useState(null);
+  const [currentTask, setCurrentTask] = useState({
+    Description: "",
+    EndDate: "",
+    Name: "",
+    Project: "",
+    StartDate: "",
+    TaskStage: "in Progress",
+  });
   const [Project, setProject] = useState({});
 
   useEffect(() => {});
   const handleTaskFrom = () => {
+    setCurrentTask({
+      Description: "",
+      EndDate: "",
+      Name: "",
+      Project: "",
+      StartDate: "",
+      TaskStage: "in Progress",
+    });
+    setIsEdit(false);
     setRenderTaskFrom(true);
   };
 
@@ -29,12 +46,17 @@ export default function Task() {
     // Delete Task
     console.log(TaskData);
     setTaskData(() => TaskData.filter((task) => task._id != id));
-    
+
     axios.delete(`http://127.0.0.1:3000/task/DeleteTask/${id}`).then((res) => {
       console.log(res.data);
     });
-    
-  }
+  };
+
+  const handleEdit = (id) => {
+    setIsEdit(true);
+    setCurrentTask(TaskData.find((task) => task._id == id));
+    setRenderTaskFrom(true);
+  };
 
   useEffect(() => {
     // get The Project
@@ -156,25 +178,24 @@ export default function Task() {
                     </button>
 
                     <button
-                      // onClick={() => handleEdit && handleEdit(task._id)}
+                      onClick={() => handleEdit(task._id)}
                       type="button"
                       className="text-white bg-yellow-500 hover:bg-yellow-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-full text-sm"
                     >
                       <FilePenLine size={16} />
                     </button>
 
-                    {/* <Link to={`/projectDetails/${task._id}`}> */}
+                    <Link to={`/taskDetails/${task._id}`}>
                     <button
                       type="button"
                       className="text-white bg-zinc-500 hover:bg-zinc-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-zinc-300 rounded-full text-sm"
                     >
                       <Info size={16} />
                     </button>
-                    {/* </Link> */}
+                    </Link>
                   </div>
                 </div>
               </div>
-
             </div>
           ))}
       </div>

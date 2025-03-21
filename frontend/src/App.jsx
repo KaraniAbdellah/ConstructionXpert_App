@@ -4,7 +4,7 @@ import ProctedRoutes from "./components/ProctedRoutes";
 import Main from "./components/main_com/Main";
 import Auth from "./components/auth/Auth";
 import Task from "./components/main_com/Task";
-// import {Toaster} from "react-hot-toast";
+import Resource from "./components/main_com/Resource";
 
 // Import Css Filies
 import "./css_styles/bg.css";
@@ -26,6 +26,7 @@ function App() {
             <Route path="/main" element={<Main></Main>}></Route>
           </Route>
           <Route path="/projectDetails/:id" element={<Task></Task>}></Route>
+          <Route path="/taskDetails/:id" element={<Resource></Resource>}></Route>
         </Routes>
 
 

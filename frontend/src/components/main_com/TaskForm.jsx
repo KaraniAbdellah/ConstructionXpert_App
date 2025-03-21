@@ -1,59 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import { Toaster } from 'react-hot-toast';
+import React, { useState, useEffect } from "react";
+import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 
-function TaskForm ({TaskData, setTaskData, setRenderTaskFrom, isEdit, setIsEdit, currentTask, Project }) {
+function TaskForm({
+  TaskData,
+  setTaskData,
+  setRenderTaskFrom,
+  isEdit,
+  setIsEdit,
+  currentTask,
+  Project,
+}) {
+  // Initialize state with currentTask values or defaults for new tasks
+  const [name, setName] = useState(isEdit ? currentTask.Name : "");
+  const [description, setDescription] = useState(isEdit ? currentTask.Description : "");
+  const [taskStage, setTaskStage] = useState(isEdit ? currentTask.TaskStage : "In Progress");
+  const [startDate, setStartDate] = useState(isEdit ? currentTask.StartDate : "");
+  const [endDate, setEndDate] = useState(isEdit ? currentTask.EndDate : "");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // const [name, setName] = useState(currentTask.Name || '');
-  // const [description, setDescription] = useState(currentTask.Description || '');
-  // const [taskStage, setTaskStage] = useState(currentTask.TaskStage || 'In Progress');
-  // const [startDate, setStartDate] = useState(currentTask.StartDate ? new Date(currentTask.StartDate).toISOString().split('T')[0] : '');
-  // const [endDate, setEndDate] = useState(currentTask.EndDate ? new Date(currentTask.EndDate).toISOString().split('T')[0] : '');
+  // Update form fields when currentTask changes (for edit mode)
+  useEffect(() => {
+    if (isEdit && currentTask) {
+      setName(currentTask.Name || "");
+      setDescription(currentTask.Description || "");
+      setTaskStage(currentTask.TaskStage || "In Progress");
+      setStartDate(currentTask.StartDate || "");
+      setEndDate(currentTask.EndDate || "");
+    }
+  }, [isEdit, currentTask]);
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [taskStage, setTaskStage] = useState('In Progress');
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setIsSubmitting(true);
+
     const task = {
       Project: Project._id,
       Name: name,
       Description: description,
       TaskStage: taskStage,
       StartDate: startDate,
-      EndDate: endDate
+      EndDate: endDate,
     };
 
-    setTaskData((tasks) => [...tasks, task]);
-
-    // Add Task to Database
-    async function addTask() {
-      await axios.post("http://127.0.0.1:3000/task/AddTask", task).then((res) => {
-        console.log(res.data);
-      });
+    try {
+      if (isEdit && currentTask._id) {
+        await axios.put(
+          `http://127.0.0.1:3000/task/UpdateTask/${currentTask._id}`,
+          task
+        );
+        
+        setTaskData(prevTasks => 
+          prevTasks.map(item => 
+            item._id === currentTask._id ? { ...task, _id: currentTask._id } : item
+          )
+        );
+      } else {
+        const response = await axios.post(
+          "http://127.0.0.1:3000/task/AddTask", 
+          task
+        );
+        const newTask = { ...task, _id: response.data._id };
+        setTaskData(prevTasks => [...prevTasks, newTask]);
+      }
+      
+      setRenderTaskFrom(false);
+      setIsEdit(!isEdit);
+    } catch (error) {
+      console.error("Error saving task:", error);
+    } finally {
+      setIsSubmitting(false);
     }
-    addTask();
-
-    
   };
 
   const handleCancel = () => {
     setRenderTaskFrom(false);
+    setIsEdit(false);
   };
-
-  useEffect(() => {
-    // Get The Project
-
-  });
 
   return (
     <div className="bg-gray-50 z-50 px-8 py-6 top-[50px] md:w-[60%] w-[90%] absolute -translate-x-1/2 transform left-1/2 rounded-lg shadow-md">
-      <Toaster position="top-center" reverseOrder={true} />
+      <Toaster position="top-center" reverseOrder={false} />
       <h2 className="text-xl font-bold text-gray-800 mb-4">
         {isEdit ? "Update Task" : "Create New Task"}
       </h2>
@@ -162,14 +189,17 @@ function TaskForm ({TaskData, setTaskData, setRenderTaskFrom, isEdit, setIsEdit,
           </button>
           <button
             type="submit"
-            className="px-4 py-2 bg-zinc-600 text-white rounded-md hover:bg-zinc-700"
+            disabled={isSubmitting}
+            className="px-4 py-2 bg-zinc-600 text-white rounded-md hover:bg-zinc-700 disabled:bg-zinc-400"
           >
-            {isEdit ? "Update Task" : "Create Task"}
+            {isSubmitting 
+              ? (isEdit ? "Updating..." : "Creating...") 
+              : (isEdit ? "Update Task" : "Create Task")}
           </button>
         </div>
       </form>
     </div>
   );
-};
+}
 
 export default TaskForm;
