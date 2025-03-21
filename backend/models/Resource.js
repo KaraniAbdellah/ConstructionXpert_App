@@ -14,8 +14,8 @@ const ResourceSchema = new mongoose.Schema({
         type: String,
         required: [true, "Type Required"]
     },
-    Supplier: {
-        type: String,
+    Suppliers: {
+        type: Array,
         required: [true, "Supplier Required"]
     },
     Task: { 
