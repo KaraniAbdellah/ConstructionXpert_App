@@ -25,6 +25,14 @@ export default function Resource() {
     StartDate: "",
     ResourceStage: "in Progress",
   });
+  const [Task, setTask] = useState({});
+
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:3000/task/GetTaskById/${id}`).then((res) => {
+      console.log(res.data);
+      setTask(res.data);
+    })
+  }, []);
 
 
 

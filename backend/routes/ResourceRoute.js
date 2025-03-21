@@ -5,7 +5,7 @@ import {createResource, GetResources, UpdateResource, DeleteResource} from "../c
 const ResourceRoute = express.Router();
 
 ResourceRoute.post("/AddResource", createResource);
-ResourceRoute.get("/GetResources/:projectId", GetResources);
+ResourceRoute.get("/GetResource/:id", GetResources);
 ResourceRoute.put("/UpdateResource/:id", UpdateResource);
 ResourceRoute.delete("/DeleteResource/:id", DeleteResource);
 

@@ -12,11 +12,10 @@ const createTask = async (req, res) => {
   }
 };
 
-
 const GetTasks = async (req, res) => {
   try {
-    const Tasks = await TaskModel.find({ Project: req.params.id });
-    res.status(200).send(Tasks);
+    const Task = await TaskModel.find({ Project: req.params.id });
+    res.status(200).send(Task);
     console.log("✅ Getting Tasks Succefully");
   } catch (error) {
     console.log("❌ Failed Getting Task");
@@ -24,6 +23,16 @@ const GetTasks = async (req, res) => {
   }
 };
 
+const GetTaskById = async (req, res) => {
+  try {
+    const task = await TaskModel.findById(req.params.id);
+    res.status(200).send(task);
+    console.log("✅ Getting Projects Succefully");
+  } catch (error) {
+    console.log("❌ Failed Getting Project" + error);
+    res.status(400).send({ message: "❌ Failed Getting Project" + error });
+  }
+};
 
 const UpdateTask = async (req, res) => {
   try {
@@ -50,11 +59,10 @@ const DeleteTask = async (req, res) => {
 
     res.status(200).send(Task);
     console.log("✅ Deletting Tasks Succefully");
-    
   } catch (error) {
     console.log("❌ Failed Deletting Task");
     res.status(400).send({ message: "❌ Failed Deletting Task" + error });
   }
 };
 
-export { createTask, GetTasks, UpdateTask, DeleteTask };
+export { createTask, GetTasks, UpdateTask, DeleteTask, GetTaskById };
