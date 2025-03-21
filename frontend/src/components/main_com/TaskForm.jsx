@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
+import axios from "axios";
 
 function TaskForm ({TaskData, setTaskData, setRenderTaskFrom, isEdit, setIsEdit, currentTask, Project }) {
 
@@ -19,15 +20,25 @@ function TaskForm ({TaskData, setTaskData, setRenderTaskFrom, isEdit, setIsEdit,
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    const taskData = {
-      Project: Project.Name,
+    const task = {
+      Project: Project._id,
       Name: name,
       Description: description,
       TaskStage: taskStage,
       StartDate: startDate,
       EndDate: endDate
     };
-    console.log(taskData);
+
+    setTaskData((tasks) => [...tasks, task]);
+
+    // Add Task to Database
+    async function addTask() {
+      await axios.post("http://127.0.0.1:3000/task/AddTask", task).then((res) => {
+        console.log(res.data);
+      });
+    }
+    addTask();
+
     
   };
 
@@ -79,7 +90,6 @@ function TaskForm ({TaskData, setTaskData, setRenderTaskFrom, isEdit, setIsEdit,
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
-            rows="4"
             required
           />
         </div>

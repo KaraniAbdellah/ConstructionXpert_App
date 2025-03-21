@@ -12,9 +12,10 @@ const createTask = async (req, res) => {
   }
 };
 
+
 const GetTasks = async (req, res) => {
   try {
-    const Tasks = await TaskModel.findOne({ project: req.params.ProjectId });
+    const Tasks = await TaskModel.find({ Project: req.params.id });
     res.status(200).send(Tasks);
     console.log("✅ Getting Tasks Succefully");
   } catch (error) {
@@ -22,6 +23,7 @@ const GetTasks = async (req, res) => {
     res.status(400).send({ message: "❌ Failed Getting Task" + error });
   }
 };
+
 
 const UpdateTask = async (req, res) => {
   try {
