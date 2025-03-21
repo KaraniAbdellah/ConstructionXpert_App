@@ -24,6 +24,18 @@ export default function Task() {
     setRenderTaskFrom(true);
   };
 
+  const handleDelete = (id) => {
+    console.log(id);
+    // Delete Task
+    console.log(TaskData);
+    setTaskData(() => TaskData.filter((task) => task._id != id));
+    
+    axios.delete(`http://127.0.0.1:3000/task/DeleteTask/${id}`).then((res) => {
+      console.log(res.data);
+    });
+    
+  }
+
   useEffect(() => {
     // get The Project
     async function GetProject() {
@@ -136,7 +148,7 @@ export default function Task() {
                 <div className="flex justify-end items-center mt-4">
                   <div className="flex gap-3">
                     <button
-                      // onClick={() => handleDelete && handleDelete(task._id)}
+                      onClick={() => handleDelete(task._id)}
                       type="button"
                       className="text-white bg-red-600 hover:bg-red-700 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-red-300 rounded-full text-sm"
                     >
