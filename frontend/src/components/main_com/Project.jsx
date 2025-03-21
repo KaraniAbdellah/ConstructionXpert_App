@@ -27,8 +27,6 @@ export default function Project() {
   };
 
   const handleDelete = (projectId) => {
-    console.log(projectId);
-    
     axios.delete(`http://127.0.0.1:3000/project/DeleteProject/${projectId}`).then((res) => {
       console.log(res.data);
     });
@@ -168,7 +166,7 @@ export default function Project() {
                 >
                   <FilePenLine size={16} />
                 </button>
-                <Link to={`/projectDetails/${project._id}`}>
+                <Link to={`/tasks/${project._id}`}>
                   <button
                     type="button"
                     className="text-white bg-zinc-500 hover:bg-zinc-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-full text-sm"

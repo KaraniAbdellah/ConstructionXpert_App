@@ -80,7 +80,6 @@ function TaskForm({
 
   return (
     <div className="bg-gray-50 z-50 px-8 py-6 top-[50px] md:w-[60%] w-[90%] absolute -translate-x-1/2 transform left-1/2 rounded-lg shadow-md">
-      <Toaster position="top-center" reverseOrder={false} />
       <h2 className="text-xl font-bold text-gray-800 mb-4">
         {isEdit ? "Update Task" : "Create New Task"}
       </h2>

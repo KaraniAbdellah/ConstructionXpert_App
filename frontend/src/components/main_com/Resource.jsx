@@ -13,8 +13,8 @@ import {
 import axios from "axios";
 
 export default function Resource() {
-  const { id } = useParams();
-  const [RenderResourceFrom, setRenderResourceFrom] = useState(false);
+  const { TaskId, ProjectId } = useParams();
+  const [RenderResourceFrom, setRenderResourceForm] = useState(false);
   const [ResourceData, setResourceData] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [currentResource, setCurrentResource] = useState({
@@ -25,11 +25,25 @@ export default function Resource() {
   });
   const [Task, setTask] = useState({});
 
+  const handleResourceFrom = () => {
+    setRenderResourceForm(true);
+  };
+
   useEffect(() => {
-    axios.get(`http://127.0.0.1:3000/task/GetTaskById/${id}`).then((res) => {
-      console.log(res.data);
-      setTask(res.data);
-    });
+    async function GetTaskAndResource() {
+      await axios
+        .get(`http://127.0.0.1:3000/task/GetTaskById/${TaskId}`)
+        .then((res) => {
+          setTask(res.data);
+        });
+
+      await axios
+        .get(`http://127.0.0.1:3000/resource/GetResource/${TaskId}`)
+        .then((res) => {
+          setResourceData(res.data);
+        });
+    }
+    GetTaskAndResource();
   }, []);
 
   return (
@@ -51,7 +65,7 @@ export default function Resource() {
 
       <div className="flex justify-end items-center">
         <button
-          // onClick={() => handleResourceFrom()}
+          onClick={() => handleResourceFrom()}
           className={`title bg-zinc-600 mr-3 flex justify-end items-center text-sm p-3 rounded-full text-white font-semibold `}
         >
           <CirclePlus className="mr-1" />
@@ -60,20 +74,27 @@ export default function Resource() {
       </div>
 
       {/* Resource From */}
-      {/* {RenderResourceFrom ? (
+      {RenderResourceFrom ? (
         <ResourceForm
           ResourceData={ResourceData}
           setResourceData={setResourceData}
-          setRenderResourceFrom={setRenderResourceFrom}
+          setRenderResourceForm={setRenderResourceForm}
           isEdit={isEdit}
           setIsEdit={setIsEdit}
           currentResource={currentResource}
-          Project={Project}
+          TaskId={TaskId}
+          ProjectId={ProjectId}
         ></ResourceForm>
       ) : (
         ""
-      )} */}
-      <ResourceForm></ResourceForm>
+      )}
+      <div
+        className={`tasks mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ${
+          RenderResourceFrom
+            ? "before:absolute before:bg-zinc-700 before:opacity-50 before:top-0 before:left-0 before:w-full before:min-h-screen"
+            : ""
+        }`}
+      ></div>
     </div>
   );
 }

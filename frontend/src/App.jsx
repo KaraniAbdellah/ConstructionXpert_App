@@ -25,8 +25,8 @@ function App() {
           <Route element={<ProctedRoutes user={user}></ProctedRoutes>}>
             <Route path="/main" element={<Main></Main>}></Route>
           </Route>
-          <Route path="/projectDetails/:id" element={<Task></Task>}></Route>
-          <Route path="/taskDetails/:id" element={<Resource></Resource>}></Route>
+          <Route path="/tasks/:ProjectId" element={<Task></Task>}></Route>
+          <Route path="/resources/:TaskId/:ProjectId" element={<Resource></Resource>}></Route>
         </Routes>
 
 

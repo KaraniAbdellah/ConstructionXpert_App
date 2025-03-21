@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import TaskForm from "./TaskForm";
-import {Link} from "react-router";
+import { Link } from "react-router";
 import {
   Clock,
   CirclePlus,
@@ -13,7 +13,7 @@ import {
 import axios from "axios";
 
 export default function Task() {
-  const { id } = useParams();
+  const { ProjectId } = useParams();
   const [RenderTaskFrom, setRenderTaskFrom] = useState(false);
   const [TaskData, setTaskData] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
@@ -62,7 +62,7 @@ export default function Task() {
     // get The Project
     async function GetProject() {
       await axios
-        .get(`http://127.0.0.1:3000/project/GetProjectById/${id}`)
+        .get(`http://127.0.0.1:3000/project/GetProjectById/${ProjectId}`)
         .then((res) => {
           setProject(res.data);
         });
@@ -72,7 +72,7 @@ export default function Task() {
     // Get Tasks
     async function GetTasks() {
       await axios
-        .get(`http://127.0.0.1:3000/task/GetTasks/${id}`)
+        .get(`http://127.0.0.1:3000/task/GetTasks/${ProjectId}`)
         .then((res) => {
           console.log(res.data);
           setTaskData(res.data);
@@ -126,7 +126,13 @@ export default function Task() {
       )}
 
       {/* Tasks Details */}
-      <div className="tasks mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div
+        className={`tasks mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ${
+          RenderTaskFrom
+            ? "before:absolute before:bg-zinc-700 before:opacity-50 before:top-0 before:left-0 before:w-full before:min-h-screen"
+            : ""
+        }`}
+      >
         {TaskData.length > 0 &&
           TaskData.map((task, index) => (
             <div
@@ -185,13 +191,13 @@ export default function Task() {
                       <FilePenLine size={16} />
                     </button>
 
-                    <Link to={`/taskDetails/${task._id}`}>
-                    <button
-                      type="button"
-                      className="text-white bg-zinc-500 hover:bg-zinc-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-zinc-300 rounded-full text-sm"
-                    >
-                      <Info size={16} />
-                    </button>
+                    <Link to={`/resources/${task._id}/${Project._id}`}>
+                      <button
+                        type="button"
+                        className="text-white bg-zinc-500 hover:bg-zinc-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-zinc-300 rounded-full text-sm"
+                      >
+                        <Info size={16} />
+                      </button>
                     </Link>
                   </div>
                 </div>

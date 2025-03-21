@@ -13,7 +13,7 @@ const createResource = async (req, res) => {
 
 const GetResources = async (req, res) => {
     try {
-        const Resources = await ResourceModel.find({Task: req.params.id});
+        const Resources = await ResourceModel.find({Task: req.params.TaskId});
         res.status(200).send(Resources);
         console.log("✅ Getting Resources Succefully");
     } catch (error) {
