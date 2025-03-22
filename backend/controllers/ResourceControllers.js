@@ -22,6 +22,17 @@ const GetResources = async (req, res) => {
     }
 }
 
+const GetResourceById = async (req, res) => {
+    try {
+        const Resource = await ResourceModel.findById(req.params.ResourceId);
+        res.status(200).send(Resource);
+        console.log("✅ Getting Resource Succefully");
+    } catch (error) {
+        console.log("❌ Failed Getting Resource");
+        res.status(400).send({message: "❌ Failed Getting Resource" + error});
+    }
+} 
+
 const UpdateResource = async (req, res) => {
     try {
         const ResourceId = req.params.id;
@@ -47,4 +58,4 @@ const DeleteResource = async (req, res) => {
 }
 
 
-export {createResource, GetResources, UpdateResource, DeleteResource};
+export {createResource, GetResources, UpdateResource, DeleteResource, GetResourceById};
