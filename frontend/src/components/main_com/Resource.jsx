@@ -84,7 +84,14 @@ export default function Resource() {
   };
 
   const handleEdit = (resourceId) => {
-    axios.post('http://127.0.0.1:3000/resource/')
+
+    // axios.get(`http://127.0.0.1:3000/resource/GetResourceById/${resourceId}`).then((res) => {
+    //   console.log(res.data);
+    //   setCurrentResource(res.data);
+    // });
+    
+    console.log(ResourceData.filter((resource) => resource._id == resourceId)[0]);
+    setCurrentResource(ResourceData.filter((resource) => resource._id == resourceId)[0]);
   };
 
   return (
