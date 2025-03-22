@@ -8,11 +8,19 @@ const Auth = () => {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const handleLogin = () => {
-    setActiveTab("login");
-  }
+    console.log("Login");
+  };
+
   const handleRegistration = () => {
+    const user = {
+      email: Email,
+      password: Password,
+      username: Fname + Lname,
+    };
+    console.log(user);
+
     
-  }
+  };
   return (
     <div className="min-h-screen flex">
       {/* Left Side */}
@@ -31,7 +39,7 @@ const Auth = () => {
               className={`flex-1 py-3 text-center font-semibold ${
                 activeTab === "login" ? "bg-white" : "bg-gray-100"
               }`}
-              onClick={() => handleLogin()}
+              onClick={() => setActiveTab("login")}
             >
               Login
             </button>
@@ -53,7 +61,7 @@ const Auth = () => {
                 Enter your credentials to access your account
               </p>
 
-              <form className="space-y-4">
+              <form onSubmit={() => handleLogin()} className="space-y-4">
                 <div>
                   <label
                     htmlFor="email-login"
@@ -61,9 +69,11 @@ const Auth = () => {
                   >
                     Email
                   </label>
-                  <input
+                  <input required
                     type="email"
                     id="email-login"
+                    value={Email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full p-2 bg-zinc-50 border border-zinc-300 rounded-md"
                     placeholder="example@gmail.com"
                   />
@@ -78,7 +88,9 @@ const Auth = () => {
                       Password
                     </label>
                   </div>
-                  <input
+                  <input required
+                    value={Password}
+                    onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     id="password-login"
                     className="w-full p-2 bg-zinc-50 border border-zinc-300 rounded-md"
@@ -106,7 +118,7 @@ const Auth = () => {
                 Fill out the form below to register
               </p>
 
-              <form className="space-y-4">
+              <form onSubmit={() => handleRegistration()}  className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
@@ -115,7 +127,9 @@ const Auth = () => {
                     >
                       First Name
                     </label>
-                    <input
+                    <input required
+                      value={Fname}
+                      onChange={(e) => setFname(e.target.value)}
                       type="text"
                       id="fname"
                       className="w-full p-2 border border-zinc-300 rounded-md"
@@ -130,7 +144,9 @@ const Auth = () => {
                     >
                       Last Name
                     </label>
-                    <input
+                    <input required
+                      value={Lname}
+                      onChange={(e) => setLname(e.target.value)}
                       type="text"
                       id="lname"
                       className="w-full p-2 border border-zinc-300 rounded-md"
@@ -146,9 +162,11 @@ const Auth = () => {
                   >
                     Email
                   </label>
-                  <input
+                  <input required
                     type="email"
                     id="email"
+                    value={Email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full p-2 bg-zinc-50 border border-zinc-300 rounded-md"
                     placeholder="example@gmail.com"
                   />
@@ -161,7 +179,9 @@ const Auth = () => {
                   >
                     Password
                   </label>
-                  <input
+                  <input required
+                    value={Password}
+                    onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     id="password"
                     className="w-full p-2 bg-zinc-50 border border-zinc-300 rounded-md"
@@ -176,7 +196,9 @@ const Auth = () => {
                   >
                     Confirm password
                   </label>
-                  <input
+                  <input required
+                    value={ConfirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     type="password"
                     id="confirm_password"
                     className="w-full p-2 border border-zinc-300 rounded-md"
@@ -185,7 +207,7 @@ const Auth = () => {
                 </div>
 
                 <button
-                onClick={() => handleRegistration()}
+                  onClick={(e) => handleRegistration(e)}
                   type="submit"
                   className="w-full py-2 px-4 bg-zinc-500 hover:bg-zinc-600 text-white font-medium rounded-md"
                 >

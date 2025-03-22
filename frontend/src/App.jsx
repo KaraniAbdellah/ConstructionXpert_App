@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import AOS from "aos";
 import 'aos/dist/aos.css';
 
-
 // Import Css Filies
 import "./css_styles/bg.css";
 
