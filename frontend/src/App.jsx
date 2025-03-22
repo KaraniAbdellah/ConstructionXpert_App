@@ -5,7 +5,8 @@ import Main from "./components/main_com/Main";
 import Auth from "./components/auth/Auth";
 import Task from "./components/main_com/Task";
 import Resource from "./components/main_com/Resource";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import AOS from "aos";
 
 // Import Css Filies
 import "./css_styles/bg.css";
@@ -13,7 +14,9 @@ import "./css_styles/bg.css";
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
-
+  useEffect(() => {
+    AOS.init();
+  }, []);
   return (
     <div className="w-full relative min-h-screen">
       <div>

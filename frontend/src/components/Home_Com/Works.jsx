@@ -5,7 +5,7 @@ import resource from "../../assets/resource.png"
 
 export default function Works() {
   return (
-    <div className="bg-gray-100 py-16">
+    <div id='works' className="bg-gray-100 py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">How it works</h2>
           <div className="max-w-4xl mx-auto">

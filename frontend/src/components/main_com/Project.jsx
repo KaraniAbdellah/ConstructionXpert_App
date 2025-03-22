@@ -138,7 +138,7 @@ export default function Project() {
                       <HandCoins size={18} />
                       <div>
                         <p className="text-sm font-medium">Budget</p>
-                        <p className="text-xs">{project.Budget}</p>
+                        <p className="text-xs">{project.Budget}$</p>
                       </div>
                     </div>
                   </div>

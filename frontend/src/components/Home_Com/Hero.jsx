@@ -1,9 +1,14 @@
 import React from "react";
 import { Link } from "react-router";
+import Aos from "aos";
+import { useEffect } from "react";
 
 export default function Hero() {
+  useEffect(() => {
+    Aos.init();
+  }, []);
   return (
-    <div className="bg-zinc-800 text-white">
+    <div className="bg-zinc-800 pt-24 text-white">
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -14,7 +19,7 @@ export default function Hero() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <Link to="/main">
-              <button className="button">
+              <button data-aos="fade-up" className="button">
                 Start Here
                 <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
                   <path

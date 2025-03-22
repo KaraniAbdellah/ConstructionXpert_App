@@ -8,7 +8,7 @@ const Header = ({ isLogin, setIsLogin }) => {
     setIsLogin(false);
   };
   return (
-    <header className="bg-white p-2 shadow-sm h-[80px] flex justify-center items-center">
+    <header className="bg-white z-10 fixed w-full p-2 shadow-sm h-[80px] flex justify-center items-center">
       <div className="container mx-auto flex items-center justify-around">
         <div className="logo">
           <img
@@ -18,11 +18,9 @@ const Header = ({ isLogin, setIsLogin }) => {
           />
         </div>
         <nav className="flex space-x-6 items-center">
-          <Link to="/">
-            <button className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
-              Home
-            </button>
-          </Link>
+          <button onClick={() => window.scroll(0, 0)} className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
+            Home
+          </button>
           <Link to="/faq">
             <button className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
               FAQ

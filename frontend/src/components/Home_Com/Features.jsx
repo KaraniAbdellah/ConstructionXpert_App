@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Features() {
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div id='features' className="container mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-center mb-12">Main Features</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {/* Feature 1 */}

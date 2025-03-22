@@ -61,9 +61,9 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-4">Quick links</h3>
             <ul>
               <li className="mb-2">
-                <a href="#home" className="hover:text-blue-300">
+                <button onClick={() => window.scroll(0, 0)} href="" className="hover:text-blue-300">
                   Home
-                </a>
+                </button>
               </li>
               <li className="mb-2">
                 <a href="#features" className="hover:text-blue-300">
@@ -75,19 +75,12 @@ export default function Footer() {
                   How it works
                 </a>
               </li>
-              <Link to="/register">
-                <li className="mb-2">
-                  <a href="#" className="hover:text-blue-300">
-                    Register now
-                  </a>
-                </li>
-              </Link>
             </ul>
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">Contact</h3>
             <p className="mb-2">Email: abdellahkarani@gmail.com</p>
-            <p className="mb-2">Téléphone: +212 607848253</p>
+            <p className="mb-2">Phone: +212 607848253</p>
             <p className="mb-2">
               Address: Construction Street, Rabat, Morocco
             </p>

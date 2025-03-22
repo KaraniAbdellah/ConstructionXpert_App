@@ -12,7 +12,7 @@ import "../../css_styles/links.css";
 const Home = ({isLogin, setIsLogin}) => {
 
   return (
-    <div className="min-h-screen  bg-gray-50">
+    <div className="min-h-screen relative bg-gray-50">
       <Header isLogin={isLogin} setIsLogin={setIsLogin}></Header>
       <Hero></Hero>
       <Features></Features>
