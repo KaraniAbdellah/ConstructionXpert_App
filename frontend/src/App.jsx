@@ -5,12 +5,14 @@ import Main from "./components/main_com/Main";
 import Auth from "./components/auth/Auth";
 import Task from "./components/main_com/Task";
 import Resource from "./components/main_com/Resource";
+import { useState } from "react";
 
 // Import Css Filies
 import "./css_styles/bg.css";
 
+
 function App() {
-  const user = true; // user is login
+  const [isLogin, setIsLogin] = useState(true);
 
   return (
     <div className="w-full relative min-h-screen">
@@ -18,11 +20,11 @@ function App() {
         <Routes>
           <Route
             path="/auth"
-            element={user ? <Navigate to="/"></Navigate> : <Auth></Auth>}
+            element={isLogin ? <Navigate to="/"></Navigate> : <Auth></Auth>}
           ></Route>
 
           <Route path="/" element={<Home></Home>}></Route>
-          <Route element={<ProctedRoutes user={user}></ProctedRoutes>}>
+          <Route element={<ProctedRoutes isLogin={isLogin}></ProctedRoutes>}>
             <Route path="/main" element={<Main></Main>}></Route>
           </Route>
           <Route path="/tasks/:ProjectId" element={<Task></Task>}></Route>

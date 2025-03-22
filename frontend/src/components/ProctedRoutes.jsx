@@ -1,9 +1,9 @@
 import React from "react";
 import { Outlet, Navigate } from "react-router";
 
-export default function ProctedRoutes({user}) {
-  console.log(user);
+export default function ProctedRoutes({isLogin}) {
+  console.log(isLogin);
   return (
-    user ? <Outlet></Outlet> : <Navigate to="/auth"></Navigate>
+    isLogin ? <Outlet></Outlet> : <Navigate to="/auth"></Navigate>
   );
 }
