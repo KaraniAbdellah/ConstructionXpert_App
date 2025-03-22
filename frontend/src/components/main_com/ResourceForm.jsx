@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Resource from './Resource';
 
 function ResourceForm({
   ResourceData,
@@ -69,6 +70,8 @@ function ResourceForm({
     axios.post("http://127.0.0.1:3000/resource/AddResource", resource).then((res) => {
       console.log(res.data);
     });
+
+    setResourceData((resources) => [...resources, resource]);
 
   };
 

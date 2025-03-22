@@ -6,6 +6,7 @@ const ResourceRoute = express.Router();
 
 ResourceRoute.post("/AddResource", createResource);
 ResourceRoute.get("/GetResource/:TaskId", GetResources);
+ResourceRoute.get("/GetResource/:TaskId", GetResources);
 ResourceRoute.put("/UpdateResource/:id", UpdateResource);
 ResourceRoute.delete("/DeleteResource/:id", DeleteResource);
 

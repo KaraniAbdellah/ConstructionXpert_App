@@ -133,13 +133,13 @@ export default function Task() {
             : ""
         }`}
       >
-        {TaskData.length > 0 &&
+        {TaskData.length > 0 ? (
           TaskData.map((task, index) => (
             <div
               key={index}
               id={task._id}
               className={`task bg-zinc-100 px-3 pt-3 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300
-          ${RenderTaskFrom ? "z-[-1]" : "z-50"}`}
+    ${RenderTaskFrom ? "z-[-1]" : "z-50"}`}
             >
               <div className="bg-gray-200 p-3 rounded-t-md flex justify-between items-center">
                 <p className="text-zinc-700 text-lg font-bold truncate">
@@ -178,7 +178,7 @@ export default function Task() {
                     <button
                       onClick={() => handleDelete(task._id)}
                       type="button"
-                      className="text-white bg-red-600 hover:bg-red-700 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-red-300 rounded-full text-sm"
+                      className="text-white bg-red-500 hover:bg-red-600 w-9 h-9 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-red-300 rounded-full text-sm"
                     >
                       <Trash2 size={16} />
                     </button>
@@ -186,7 +186,7 @@ export default function Task() {
                     <button
                       onClick={() => handleEdit(task._id)}
                       type="button"
-                      className="text-white bg-yellow-500 hover:bg-yellow-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-full text-sm"
+                      className="text-white bg-yellow-500 hover:bg-yellow-600 w-9 h-9 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-full text-sm"
                     >
                       <FilePenLine size={16} />
                     </button>
@@ -194,7 +194,7 @@ export default function Task() {
                     <Link to={`/resources/${task._id}/${Project._id}`}>
                       <button
                         type="button"
-                        className="text-white bg-zinc-500 hover:bg-zinc-600 w-10 h-10 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-zinc-300 rounded-full text-sm"
+                        className="text-white bg-zinc-500 hover:bg-zinc-600 w-9 h-9 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-zinc-300 rounded-full text-sm"
                       >
                         <Info size={16} />
                       </button>
@@ -203,7 +203,12 @@ export default function Task() {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="col-span-full text-center py-12 text-gray-500">
+            No tasks found
+          </div>
+        )}
       </div>
     </div>
   );
