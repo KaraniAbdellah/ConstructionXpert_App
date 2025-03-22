@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Resource from './Resource';
+import Resource from "./Resource";
 
 function ResourceForm({
   ResourceData,
@@ -10,15 +10,19 @@ function ResourceForm({
   setIsEdit,
   currentResource,
   TaskId,
-  ProjectId
+  ProjectId,
 }) {
   // Initialize state with currentResource values or defaults for new resources
-  const [name, setName] = useState("");
-  const [type, setType] = useState("Material");
-  const [quantity, setQuantity] = useState("");
-  const [suppliers, setSuppliers] = useState([]);
+  const [name, setName] = useState(currentResource.Name || "");
+  const [type, setType] = useState(currentResource.Type || "Material");
+  const [quantity, setQuantity] = useState(currentResource.Quantity || "0");
+  const [suppliers, setSuppliers] = useState(currentResource.Suppliers || []);
   const [newSupplier, setNewSupplier] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    console.log(currentResource);
+  }, []);
 
   // Resource type options
   const resourceTypes = [
@@ -29,7 +33,7 @@ function ResourceForm({
     "Software",
     "Service",
     "Infrastructure",
-    "Other"
+    "Other",
   ];
 
   // useEffect(() => {
@@ -52,7 +56,6 @@ function ResourceForm({
     setSuppliers(suppliers.filter((_, i) => i !== index));
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -62,21 +65,30 @@ function ResourceForm({
       Quantity: quantity,
       Suppliers: suppliers,
       Task: TaskId,
-      Project: ProjectId
+      Project: ProjectId,
     };
-    
+
     console.log(resource);
+    if (isEdit) {
+      axios.put(`http://127.0.0.1:3000/resource/UpdateResource/${currentResource._id}`, resource).then((res) => {
+        console.log(res.data);
+      });
+      setResourceData(ResourceData.map((rsc) => (rsc._id === currentResource._id ? resource: rsc)));
+    } else {
+      axios
+        .post("http://127.0.0.1:3000/resource/AddResource", resource)
+        .then((res) => {
+          console.log(res.data);
+        });
 
-    axios.post("http://127.0.0.1:3000/resource/AddResource", resource).then((res) => {
-      console.log(res.data);
-    });
-
-    setResourceData((resources) => [...resources, resource]);
-
+      setResourceData((resources) => [...resources, resource]);
+    }
+    setIsEdit(false);
+    setRenderResourceForm(false);
   };
 
   const handleCancel = () => {
-    console.log("setRenderResourceForm")
+    console.log("setRenderResourceForm");
     setRenderResourceForm(false);
     if (isEdit) setIsEdit(false);
   };
@@ -167,31 +179,30 @@ function ResourceForm({
               Add
             </button>
           </div>
-          
-          <div className="mt-2">
-              {suppliers.length > 0 ? (
-                <div className="flex flex-wrap gap-2">
-                  {suppliers.map((suplier, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center bg-zinc-100 px-3 py-1 rounded-full"
-                    >
-                      <span className="text-zinc-800 text-sm">{suplier}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeSupplier(index)}
-                        className="ml-2 text-zinc-800 hover:text-zinc-900"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-sm text-gray-500">No admins added yet</p>
-              )}
-            </div>
 
+          <div className="mt-2">
+            {suppliers.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {suppliers.map((suplier, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center bg-zinc-100 px-3 py-1 rounded-full"
+                  >
+                    <span className="text-zinc-800 text-sm">{suplier}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeSupplier(index)}
+                      className="ml-2 text-zinc-800 hover:text-zinc-900"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500">No admins added yet</p>
+            )}
+          </div>
         </div>
 
         <div className="flex justify-end space-x-3">
@@ -207,9 +218,13 @@ function ResourceForm({
             disabled={isSubmitting}
             className="px-4 py-2 bg-zinc-600 text-white rounded-md hover:bg-zinc-700 disabled:bg-zinc-400"
           >
-            {isSubmitting 
-              ? (isEdit ? "Updating..." : "Creating...") 
-              : (isEdit ? "Update Resource" : "Create Resource")}
+            {isSubmitting
+              ? isEdit
+                ? "Updating..."
+                : "Creating..."
+              : isEdit
+              ? "Update Resource"
+              : "Create Resource"}
           </button>
         </div>
       </form>

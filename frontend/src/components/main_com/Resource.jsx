@@ -89,9 +89,11 @@ export default function Resource() {
     //   console.log(res.data);
     //   setCurrentResource(res.data);
     // });
-    
+
     console.log(ResourceData.filter((resource) => resource._id == resourceId)[0]);
     setCurrentResource(ResourceData.filter((resource) => resource._id == resourceId)[0]);
+    setIsEdit(true);
+    setRenderResourceForm(true);
   };
 
   return (
