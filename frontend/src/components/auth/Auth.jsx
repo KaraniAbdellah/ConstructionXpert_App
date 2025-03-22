@@ -11,7 +11,7 @@ const Auth = () => {
     setActiveTab("login");
   }
   const handleRegistration = () => {
-
+    
   }
   return (
     <div className="min-h-screen flex">
