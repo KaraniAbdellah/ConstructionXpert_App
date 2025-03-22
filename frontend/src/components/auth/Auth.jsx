@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Auth = () => {
   const [activeTab, setActiveTab] = useState("login");
@@ -7,19 +9,43 @@ const Auth = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
-  const handleLogin = () => {
-    console.log("Login");
+  const handleLogin = (e) => {
+    e.preventDefault()
+    
+    const user = {
+      email: Email,
+      password: Password,
+    };
+
+    try {
+      axios.post("http://127.0.0.1:3000/user/Login", user).then((res) => {
+        if (res.data.token) {
+          Cookies.set("token", res.data.token);
+          console.log(res.data.token);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleRegistration = () => {
+  const handleRegistration = (e) => {
+    e.preventDefault();
+
     const user = {
       email: Email,
       password: Password,
       username: Fname + Lname,
     };
-    console.log(user);
 
-    
+    try {
+      axios.post("http://127.0.0.1:3000/user/Register", user).then((res) => {
+        console.log(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setActiveTab("login");
   };
   return (
     <div className="min-h-screen flex">
@@ -61,7 +87,7 @@ const Auth = () => {
                 Enter your credentials to access your account
               </p>
 
-              <form onSubmit={() => handleLogin()} className="space-y-4">
+              <form onSubmit={(e) => handleLogin(e)} className="space-y-4">
                 <div>
                   <label
                     htmlFor="email-login"
@@ -118,7 +144,7 @@ const Auth = () => {
                 Fill out the form below to register
               </p>
 
-              <form onSubmit={() => handleRegistration()}  className="space-y-4">
+              <form onSubmit={(e) => handleRegistration(e)}  className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
@@ -253,7 +279,7 @@ const Auth = () => {
                 availability details.
               </p>
             </div>
-            <div class=" bg-linear-to-r/srgb from-indigo-500 to-teal-400"></div>
+            <div className=" bg-linear-to-r/srgb from-indigo-500 to-teal-400"></div>
           </div>
         </div>
       </div>

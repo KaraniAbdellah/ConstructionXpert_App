@@ -13,7 +13,7 @@ export default function Main() {
       <button
           onClick={() => handleLogout()}
           type="button"
-          class="text-white absolute bottom-5 left-10 bg-red-600 hover:bg-red-700 focus:outline-none font-medium rounded-md text-sm p-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+          className="text-white absolute bottom-5 left-10 bg-red-600 hover:bg-red-700 focus:outline-none font-medium rounded-md text-sm p-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
         >
           <LogOut />
         </button>

@@ -8,6 +8,8 @@ import Resource from "./components/main_com/Resource";
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import 'aos/dist/aos.css';
+import axios from "axios";
+import Cookie from "js-cookie";
 
 // Import Css Filies
 import "./css_styles/bg.css";
@@ -17,6 +19,23 @@ function App() {
   const [isLogin, setIsLogin] = useState(true);
   useEffect(() => {
     AOS.init();
+
+    // Verfiy The Token
+    axios.get("http://127.0.0.1:3000/user/GetMe", {
+      headers: {
+        authorization: `Bearer s;s;s;;s;`
+      }
+    }).then((res) => {
+      try {
+        if (res.data) {
+          setIsLogin(true);
+        }
+      } catch (error) {
+        setIsLogin(false);
+        console.log("Error Here " + error);
+      }
+       
+    });
   }, []);
   return (
     <div className="w-full relative min-h-screen">
