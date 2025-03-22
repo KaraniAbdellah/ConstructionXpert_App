@@ -11,12 +11,12 @@ export default function Works() {
           <div className="max-w-4xl mx-auto">
 
             <div className="flex flex-col md:flex-row items-center mb-12">
-              <div className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+              <div data-aos="fade-right" className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
                 <div className="bg-zinc-800 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">1</div>
                 <h3 className="text-xl font-bold mb-2">Create your project</h3>
                 <p className="text-gray-600">Define your project details, including name, description, dates, and estimated budget.</p>
               </div>
-              <div className="md:w-1/2 w-full bg-white p-4 rounded-lg shadow-md">
+              <div data-aos="fade-up" className="md:w-1/2 w-full bg-white p-4 rounded-lg shadow-md">
                 <div className="h-48 bg-gray-200 rounded flex items-center justify-center">
                 <img className='h-[100px] w-[100px]' src={project} alt="" />
                 </div>
@@ -24,12 +24,12 @@ export default function Works() {
             </div>
 
             <div className="flex flex-col md:flex-row-reverse items-start md:items-center mb-12">
-              <div className="md:w-1/2  mb-6 md:mb-0 md:pl-8">
+              <div data-aos="fade-right" className="md:w-1/2  mb-6 md:mb-0 md:pl-8">
                 <div className="bg-zinc-800 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">2</div>
                 <h3 className="text-xl font-bold mb-2">Add tasks</h3>
                 <p className="text-gray-600">Create specific tasks for your project and assign them to your team members.</p>
               </div>
-              <div className="md:w-1/2 w-full bg-white p-4 rounded-lg shadow-md">
+              <div data-aos="fade-up" className="md:w-1/2 w-full bg-white p-4 rounded-lg shadow-md">
                 <div className="h-48 bg-gray-200 rounded flex items-center justify-center">
                   <img className='h-[100px] w-[100px]' src={task} alt="" />
                 </div>
@@ -37,12 +37,12 @@ export default function Works() {
             </div>
 
             <div className="flex flex-col md:flex-row items-start md:items-center">
-              <div className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+              <div data-aos="fade-right" className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
                 <div className="bg-zinc-800 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">3</div>
                 <h3 className="text-xl font-bold mb-2">Manage your resources</h3>
                 <p className="text-gray-600">Assign resources to your tasks and track their usage throughout the project.</p>
               </div>
-              <div className="md:w-1/2 w-full bg-white p-4 rounded-lg shadow-md">
+              <div data-aos="fade-up" className="md:w-1/2 w-full bg-white p-4 rounded-lg shadow-md">
                 <div className="h-48 bg-gray-200 rounded flex items-center justify-center">
                   <div className="h-48 bg-gray-200 rounded flex items-center justify-center">
                     <img className='h-[100px] w-[100px]' src={resource} alt="" />

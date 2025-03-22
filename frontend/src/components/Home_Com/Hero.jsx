@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <div className="bg-zinc-800 pt-24 text-white">
       <div className="container mx-auto px-4 py-16 md:py-24">
-        <div className="max-w-4xl mx-auto text-center">
+        <div data-aos="fade-right" className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             ConstructionXpert Services
           </h1>
