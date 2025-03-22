@@ -20,19 +20,16 @@ function App() {
         <Routes>
           <Route
             path="/auth"
-            element={isLogin ? <Navigate to="/"></Navigate> : <Auth></Auth>}
+            element={isLogin ? <Navigate to="/"></Navigate> : <Auth isLogin={isLogin} setIsLogin={setIsLogin}></Auth>}
           ></Route>
 
-          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/" element={<Home isLogin={isLogin} setIsLogin={setIsLogin}></Home>}></Route>
           <Route element={<ProctedRoutes isLogin={isLogin}></ProctedRoutes>}>
             <Route path="/main" element={<Main></Main>}></Route>
           </Route>
           <Route path="/tasks/:ProjectId" element={<Task></Task>}></Route>
           <Route path="/resources/:TaskId/:ProjectId" element={<Resource></Resource>}></Route>
         </Routes>
-
-
-        {/* Log Out Button */}
       </div>
     </div>
   );

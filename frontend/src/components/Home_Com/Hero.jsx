@@ -25,9 +25,6 @@ export default function Hero() {
                 </svg>
               </button>
             </Link>
-            <Link to="/auth">
-              <button className="button">Register now</button>
-            </Link>
           </div>
         </div>
       </div>

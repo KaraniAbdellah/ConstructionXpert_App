@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 
 const Auth = () => {
-  const [activeTab, setActiveTab] = useState("connexion");
+  const [activeTab, setActiveTab] = useState("login");
+  const [Fname, setFname] = useState("");
+  const [Lname, setLname] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const handleLogin = () => {
+    setActiveTab("login");
+  }
+  const handleRegistration = () => {
 
+  }
   return (
     <div className="min-h-screen flex">
       {/* Left Side */}
@@ -19,9 +29,9 @@ const Auth = () => {
           <div className="flex mb-6 border rounded-md overflow-hidden">
             <button
               className={`flex-1 py-3 text-center font-semibold ${
-                activeTab === "connexion" ? "bg-white" : "bg-gray-100"
+                activeTab === "login" ? "bg-white" : "bg-gray-100"
               }`}
-              onClick={() => setActiveTab("connexion")}
+              onClick={() => handleLogin()}
             >
               Login
             </button>
@@ -36,7 +46,7 @@ const Auth = () => {
           </div>
 
           {/* Login Form */}
-          {activeTab === "connexion" && (
+          {activeTab === "login" && (
             <div>
               <h2 className="text-xl font-medium text-zinc-800 mb-1">Login</h2>
               <p className="text-zinc-500 mb-6">
@@ -55,7 +65,7 @@ const Auth = () => {
                     type="email"
                     id="email-login"
                     className="w-full p-2 bg-zinc-50 border border-zinc-300 rounded-md"
-                    placeholder="anass@gmail.com"
+                    placeholder="example@gmail.com"
                   />
                 </div>
 
@@ -175,6 +185,7 @@ const Auth = () => {
                 </div>
 
                 <button
+                onClick={() => handleRegistration()}
                   type="submit"
                   className="w-full py-2 px-4 bg-zinc-500 hover:bg-zinc-600 text-white font-medium rounded-md"
                 >
@@ -221,7 +232,6 @@ const Auth = () => {
               </p>
             </div>
             <div class=" bg-linear-to-r/srgb from-indigo-500 to-teal-400"></div>
-
           </div>
         </div>
       </div>

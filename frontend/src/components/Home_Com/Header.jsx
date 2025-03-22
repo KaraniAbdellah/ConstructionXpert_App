@@ -3,7 +3,10 @@ import React from "react";
 import logo from "../../assets/logo1.png";
 import { Link } from "react-router";
 
-const Header = () => {
+const Header = ({ isLogin, setIsLogin }) => {
+  const handleLogout = () => {
+    setIsLogin(false);
+  };
   return (
     <header className="bg-white p-2 shadow-sm h-[80px] flex justify-center items-center">
       <div className="container mx-auto flex items-center justify-around">
@@ -30,9 +33,18 @@ const Header = () => {
               Pricing
             </button>
           </Link>
-          <Link to="/auth">
-            <button className="button">Register now</button>
-          </Link>
+
+          {!isLogin ? (
+            <Link to="/auth">
+              <button className="button">Register now</button>
+            </Link>
+          ) : (
+            <Link to="/auth">
+              <button onClick={() => handleLogout()} className="button">
+                Logout
+              </button>
+            </Link>
+          )}
         </nav>
       </div>
     </header>

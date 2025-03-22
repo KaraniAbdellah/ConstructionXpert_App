@@ -9,10 +9,11 @@ import "../../css_styles/btns.css";
 import "../../css_styles/links.css";
 
 
-const Home = () => {
+const Home = ({isLogin, setIsLogin}) => {
+
   return (
     <div className="min-h-screen  bg-gray-50">
-      <Header></Header>
+      <Header isLogin={isLogin} setIsLogin={setIsLogin}></Header>
       <Hero></Hero>
       <Features></Features>
       <Works></Works>
