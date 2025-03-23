@@ -1,13 +1,15 @@
 // Header.jsx
 import React from "react";
 import logo from "../../assets/logo1.png";
-import { Link } from "react-router";
-import Cookie from 'js-cookie';
+import { Link, useNavigate } from "react-router";
+import Cookie from "js-cookie";
 
 const Header = ({ isLogin, setIsLogin }) => {
+  const navigate = useNavigate();
   const handleLogout = () => {
     setIsLogin(false);
     Cookie.remove("token");
+    navigate("/auth");
   };
   return (
     <header className="bg-white z-10 fixed w-full p-2 shadow-sm h-[80px] flex justify-center items-center">
@@ -20,7 +22,10 @@ const Header = ({ isLogin, setIsLogin }) => {
           />
         </div>
         <nav className="flex space-x-6 items-center">
-          <button onClick={() => window.scroll(0, 0)} className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
+          <button
+            onClick={() => window.scroll(0, 0)}
+            className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center"
+          >
             Home
           </button>
           <Link to="/faq">
@@ -39,11 +44,9 @@ const Header = ({ isLogin, setIsLogin }) => {
               <button className="button">Register now</button>
             </Link>
           ) : (
-            <Link to="/auth">
-              <button onClick={() => handleLogout()} className="button">
-                Logout
-              </button>
-            </Link>
+            <button onClick={() => handleLogout()} className="button">
+              Logout
+            </button>
           )}
         </nav>
       </div>

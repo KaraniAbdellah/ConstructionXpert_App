@@ -63,7 +63,7 @@ function App() {
   console.log("App " + isLogin);
 
   return (
-    <div className="w-full relative min-h-screen">
+    <div className="app w-full relative min-h-screen">
       <div>
         <Routes>
           <Route

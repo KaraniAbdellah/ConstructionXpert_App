@@ -3,6 +3,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
 import Loading from "../Loading";
+import { House } from "lucide-react";
+import { Link } from "react-router";
 
 const Auth = ({ isLogin, setIsLogin }) => {
   const navigate = useNavigate();
@@ -22,15 +24,13 @@ const Auth = ({ isLogin, setIsLogin }) => {
     };
 
     try {
-      await axios
-        .post("http://127.0.0.1:3000/user/Login", user)
-        .then((res) => {
-          if (res.data.token) {
-            setIsLogin(true);
-            Cookies.set("token", res.data.token);
-            navigate("/main");
-          }
-        });
+      await axios.post("http://127.0.0.1:3000/user/Login", user).then((res) => {
+        if (res.data.token) {
+          setIsLogin(true);
+          Cookies.set("token", res.data.token);
+          navigate("/main");
+        }
+      });
     } catch (error) {
       alert("Invalid Credentials");
       console.log(error);
@@ -58,9 +58,10 @@ const Auth = ({ isLogin, setIsLogin }) => {
       alert("User Already Exit");
     }
   };
+  console.log("Auth " + isLogin);
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex relative">
       {/* Left Side */}
       <div className="w-full md:w-1/2 p-8 flex flex-col items-center justify-center">
         <div className="w-full max-w-md">
@@ -74,7 +75,7 @@ const Auth = ({ isLogin, setIsLogin }) => {
           {/* Tabs */}
           <div className="flex mb-6 border rounded-md overflow-hidden">
             <button
-              className={`flex-1 py-3 text-center font-semibold ${
+              className={`flex-1 py-3 text-zinc-700 text-center font-semibold ${
                 activeTab === "login" ? "bg-white" : "bg-gray-100"
               }`}
               onClick={() => setActiveTab("login")}
@@ -82,7 +83,7 @@ const Auth = ({ isLogin, setIsLogin }) => {
               Login
             </button>
             <button
-              className={`flex-1 py-3 text-center font-semibold ${
+              className={`flex-1 text-zinc-700 py-3 text-center font-semibold ${
                 activeTab === "registration" ? "bg-white" : "bg-gray-100"
               }`}
               onClick={() => setActiveTab("registration")}
@@ -99,7 +100,7 @@ const Auth = ({ isLogin, setIsLogin }) => {
                 Enter your credentials to access your account
               </p>
 
-              <form className="space-y-4">
+              <form onSubmit={(e) => handleLogin(e)} className="space-y-4">
                 <div>
                   <label
                     htmlFor="email-login"
@@ -139,12 +140,17 @@ const Auth = ({ isLogin, setIsLogin }) => {
                 </div>
 
                 <button
-                  onClick={(e) => handleLogin(e)}
                   type="submit"
                   className="w-full py-2 px-4 bg-zinc-500 hover:bg-zinc-600 text-white font-medium rounded-md"
                 >
                   Login
                 </button>
+                <Link to="/">
+                  <button className="flex justify-center items-center w-full mt-4">
+                    <House className="mr-2 text-sky-600" />{" "}
+                    <p className="text-sky-600">back to home</p>
+                  </button>
+                </Link>
               </form>
             </div>
           )}
@@ -258,10 +264,16 @@ const Auth = ({ isLogin, setIsLogin }) => {
                 <button
                   onClick={(e) => handleRegistration(e)}
                   type="submit"
-                  className="w-full py-2 px-4 bg-zinc-500 hover:bg-zinc-600 text-white font-medium rounded-md"
+                  className="w-full mb-4 py-2 px-4 bg-zinc-500 hover:bg-zinc-600 text-white font-medium rounded-md"
                 >
                   Register
                 </button>
+                <Link to="/">
+                  <button className="flex justify-center items-center w-full mt-4">
+                    <House className="mr-2 text-sky-600" />{" "}
+                    <p className="text-sky-600">back to home</p>
+                  </button>
+                </Link>
               </form>
             </div>
           )}

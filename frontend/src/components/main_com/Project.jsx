@@ -60,7 +60,7 @@ export default function Project() {
     <div
       className={`p-5 ${
         RenderProjectFrom
-          ? "before:absolute before:bg-zinc-700 before:opacity-50 before:top-0 before:left-0 before:w-full before:min-h-screen"
+          ? "before:absolute before:bg-zinc-700 before:opacity-50 before:top-0 before:left-0 before:w-full before:h-full"
           : ""
       }`}
     >
@@ -99,7 +99,7 @@ export default function Project() {
               key={index}
               id={project._id}
               className={`project bg-zinc-100 px-3 pt-3 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300
-        ${RenderProjectFrom ? "z-[-1]" : "z-50"}`}
+        ${RenderProjectFrom ? "z-[-1]" : "z-0"}`}
             >
               <div className="bg-gray-200 p-3 rounded-t-md flex justify-between items-center">
                 <p className="text-zinc-700 text-lg font-bold truncate">
