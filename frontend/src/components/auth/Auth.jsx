@@ -9,7 +9,7 @@ const Auth = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
     
     const user = {
@@ -18,18 +18,19 @@ const Auth = () => {
     };
 
     try {
-      axios.post("http://127.0.0.1:3000/user/Login", user).then((res) => {
+      await axios.post("http://127.0.0.1:3000/user/Login", user).then((res) => {
         if (res.data.token) {
           Cookies.set("token", res.data.token);
           console.log(res.data.token);
         }
       });
     } catch (error) {
+      alert("Invalid Credentials");
       console.log(error);
     }
   };
 
-  const handleRegistration = (e) => {
+  const handleRegistration = async (e) => {
     e.preventDefault();
 
     const user = {
@@ -37,13 +38,14 @@ const Auth = () => {
       password: Password,
       username: Fname + Lname,
     };
-
+    
     try {
-      axios.post("http://127.0.0.1:3000/user/Register", user).then((res) => {
+      await axios.post("http://127.0.0.1:3000/user/Register", user).then((res) => {
         console.log(res.data);
       });
     } catch (error) {
       console.log(error);
+      alert("User Already Exit");
     }
     setActiveTab("login");
   };

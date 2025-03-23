@@ -23,7 +23,7 @@ function App() {
     // Verfiy The Token
     axios.get("http://127.0.0.1:3000/user/GetMe", {
       headers: {
-        authorization: `Bearer s;s;s;;s;`
+        authorization: `Bearer ${Cookie.get("token")}`
       }
     }).then((res) => {
       try {
