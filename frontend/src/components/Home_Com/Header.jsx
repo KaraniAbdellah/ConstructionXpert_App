@@ -2,10 +2,12 @@
 import React from "react";
 import logo from "../../assets/logo1.png";
 import { Link } from "react-router";
+import Cookie from 'js-cookie';
 
 const Header = ({ isLogin, setIsLogin }) => {
   const handleLogout = () => {
     setIsLogin(false);
+    Cookie.remove("token");
   };
   return (
     <header className="bg-white z-10 fixed w-full p-2 shadow-sm h-[80px] flex justify-center items-center">

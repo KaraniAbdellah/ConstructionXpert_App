@@ -29,6 +29,7 @@ function App() {
 
     const token = Cookie.get("token");
     if (!token) {
+      setIsLoading(false);
       console.log("token does not found!!!");
       return;
     }
@@ -59,6 +60,8 @@ function App() {
     return <Loading></Loading>
   }
 
+  console.log("App " + isLogin);
+
   return (
     <div className="w-full relative min-h-screen">
       <div>
@@ -67,20 +70,20 @@ function App() {
             path="/auth"
             element={
               isLogin ? (
-                <Navigate to="/"></Navigate>
+                <Navigate to="/main"></Navigate>
               ) : (
-                <Auth isLogin={isLogin} setIsLogin={setIsLogin} />
+                <Auth isLogin={isLogin}  setIsLogin={setIsLogin} />
               )
             }
           ></Route>
 
           <Route
             path="/"
-            element={<Home isLogin={isLogin} setIsLogin={setIsLogin} />}
+            element={<Home  isLogin={isLogin} setIsLogin={setIsLogin} />}
           ></Route>
 
           <Route element={<ProctedRoutes isLogin={isLogin} />}>
-            <Route path="/main" element={<Main />}></Route>
+            <Route path="/main" element={<Main setIsLogin={setIsLogin} />}></Route>
           </Route>
 
           <Route path="/tasks/:ProjectId" element={<Task />}></Route>

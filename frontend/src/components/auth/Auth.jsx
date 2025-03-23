@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
+import Loading from "../Loading";
 
-const Auth = ({setIsLogin}) => {
+const Auth = ({ isLogin, setIsLogin }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("login");
   const [Fname, setFname] = useState("");
@@ -11,23 +12,25 @@ const Auth = ({setIsLogin}) => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
+
   const handleLogin = async (e) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     const user = {
       email: Email,
       password: Password,
     };
 
     try {
-      await axios.post("http://127.0.0.1:3000/user/Login", user).then((res) => {
-        if (res.data.token) {
-          setIsLogin(true);
-          Cookies.set("token", res.data.token);
-          console.log(res.data.token);
-          navigate("/main");
-        }
-      });
+      await axios
+        .post("http://127.0.0.1:3000/user/Login", user)
+        .then((res) => {
+          if (res.data.token) {
+            setIsLogin(true);
+            Cookies.set("token", res.data.token);
+            navigate("/main");
+          }
+        });
     } catch (error) {
       alert("Invalid Credentials");
       console.log(error);
@@ -42,17 +45,20 @@ const Auth = ({setIsLogin}) => {
       password: Password,
       username: Fname + Lname,
     };
-    
+
     try {
-      await axios.post("http://127.0.0.1:3000/user/Register", user).then((res) => {
-        console.log(res.data);
-        setActiveTab("login");
-      });
+      await axios
+        .post("http://127.0.0.1:3000/user/Register", user)
+        .then((res) => {
+          console.log(res.data);
+          setActiveTab("login");
+        });
     } catch (error) {
       console.log(error);
       alert("User Already Exit");
     }
   };
+
   return (
     <div className="min-h-screen flex">
       {/* Left Side */}
@@ -93,7 +99,7 @@ const Auth = ({setIsLogin}) => {
                 Enter your credentials to access your account
               </p>
 
-              <form onSubmit={(e) => handleLogin(e)} className="space-y-4">
+              <form className="space-y-4">
                 <div>
                   <label
                     htmlFor="email-login"
@@ -101,7 +107,8 @@ const Auth = ({setIsLogin}) => {
                   >
                     Email
                   </label>
-                  <input required
+                  <input
+                    required
                     type="email"
                     id="email-login"
                     value={Email}
@@ -120,7 +127,8 @@ const Auth = ({setIsLogin}) => {
                       Password
                     </label>
                   </div>
-                  <input required
+                  <input
+                    required
                     value={Password}
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
@@ -131,6 +139,7 @@ const Auth = ({setIsLogin}) => {
                 </div>
 
                 <button
+                  onClick={(e) => handleLogin(e)}
                   type="submit"
                   className="w-full py-2 px-4 bg-zinc-500 hover:bg-zinc-600 text-white font-medium rounded-md"
                 >
@@ -150,7 +159,10 @@ const Auth = ({setIsLogin}) => {
                 Fill out the form below to register
               </p>
 
-              <form onSubmit={(e) => handleRegistration(e)}  className="space-y-4">
+              <form
+                onSubmit={(e) => handleRegistration(e)}
+                className="space-y-4"
+              >
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
@@ -159,7 +171,8 @@ const Auth = ({setIsLogin}) => {
                     >
                       First Name
                     </label>
-                    <input required
+                    <input
+                      required
                       value={Fname}
                       onChange={(e) => setFname(e.target.value)}
                       type="text"
@@ -176,7 +189,8 @@ const Auth = ({setIsLogin}) => {
                     >
                       Last Name
                     </label>
-                    <input required
+                    <input
+                      required
                       value={Lname}
                       onChange={(e) => setLname(e.target.value)}
                       type="text"
@@ -194,7 +208,8 @@ const Auth = ({setIsLogin}) => {
                   >
                     Email
                   </label>
-                  <input required
+                  <input
+                    required
                     type="email"
                     id="email"
                     value={Email}
@@ -211,7 +226,8 @@ const Auth = ({setIsLogin}) => {
                   >
                     Password
                   </label>
-                  <input required
+                  <input
+                    required
                     value={Password}
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
@@ -228,7 +244,8 @@ const Auth = ({setIsLogin}) => {
                   >
                     Confirm password
                   </label>
-                  <input required
+                  <input
+                    required
                     value={ConfirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     type="password"
