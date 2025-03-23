@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router";
 
-const Auth = () => {
+const Auth = ({setIsLogin}) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("login");
   const [Fname, setFname] = useState("");
   const [Lname, setLname] = useState("");
@@ -20,8 +22,10 @@ const Auth = () => {
     try {
       await axios.post("http://127.0.0.1:3000/user/Login", user).then((res) => {
         if (res.data.token) {
+          setIsLogin(true);
           Cookies.set("token", res.data.token);
           console.log(res.data.token);
+          navigate("/main");
         }
       });
     } catch (error) {
@@ -42,12 +46,12 @@ const Auth = () => {
     try {
       await axios.post("http://127.0.0.1:3000/user/Register", user).then((res) => {
         console.log(res.data);
+        setActiveTab("login");
       });
     } catch (error) {
       console.log(error);
       alert("User Already Exit");
     }
-    setActiveTab("login");
   };
   return (
     <div className="min-h-screen flex">

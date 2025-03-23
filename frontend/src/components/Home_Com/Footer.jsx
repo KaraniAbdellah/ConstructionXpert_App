@@ -61,7 +61,7 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-4">Quick links</h3>
             <ul>
               <li className="mb-2">
-                <button onClick={() => window.scroll(0, 0)} href="" className="hover:text-blue-300">
+                <button onClick={() => window.scroll(0, 0)} className="hover:text-blue-300">
                   Home
                 </button>
               </li>

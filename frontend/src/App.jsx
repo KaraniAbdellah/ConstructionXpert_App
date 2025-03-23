@@ -5,53 +5,89 @@ import Main from "./components/main_com/Main";
 import Auth from "./components/auth/Auth";
 import Task from "./components/main_com/Task";
 import Resource from "./components/main_com/Resource";
+import Loading from "./components/Loading";
+
 import { useEffect, useState } from "react";
 import AOS from "aos";
-import 'aos/dist/aos.css';
+import "aos/dist/aos.css";
 import axios from "axios";
 import Cookie from "js-cookie";
 
+
+
 // Import Css Filies
 import "./css_styles/bg.css";
+import "./css_styles/loading.css";
 
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     AOS.init();
 
+    const token = Cookie.get("token");
+    if (!token) {
+      console.log("token does not found!!!");
+      return;
+    }
+
     // Verfiy The Token
-    axios.get("http://127.0.0.1:3000/user/GetMe", {
-      headers: {
-        authorization: `Bearer ${Cookie.get("token")}`
-      }
-    }).then((res) => {
+    async function VerifyTheUserToken() {
       try {
-        if (res.data) {
-          setIsLogin(true);
-        }
+        await axios
+          .get("http://127.0.0.1:3000/user/GetMe", {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            setIsLogin(true);
+          })
+          .finally(() => setIsLoading(false));
       } catch (error) {
-        setIsLogin(false);
-        console.log("Error Here " + error);
+        console.log("Authentication error:", error);
+        if (token) console.log("Please Login {Expired Login}");
       }
-       
-    });
+    }
+    VerifyTheUserToken();
   }, []);
+
+  if (isLoading) {
+    return <Loading></Loading>
+  }
+
   return (
     <div className="w-full relative min-h-screen">
       <div>
         <Routes>
           <Route
             path="/auth"
-            element={isLogin ? <Navigate to="/"></Navigate> : <Auth isLogin={isLogin} setIsLogin={setIsLogin}></Auth>}
+            element={
+              isLogin ? (
+                <Navigate to="/"></Navigate>
+              ) : (
+                <Auth isLogin={isLogin} setIsLogin={setIsLogin} />
+              )
+            }
           ></Route>
 
-          <Route path="/" element={<Home isLogin={isLogin} setIsLogin={setIsLogin}></Home>}></Route>
-          <Route element={<ProctedRoutes isLogin={isLogin}></ProctedRoutes>}>
-            <Route path="/main" element={<Main></Main>}></Route>
+          <Route
+            path="/"
+            element={<Home isLogin={isLogin} setIsLogin={setIsLogin} />}
+          ></Route>
+
+          <Route element={<ProctedRoutes isLogin={isLogin} />}>
+            <Route path="/main" element={<Main />}></Route>
           </Route>
-          <Route path="/tasks/:ProjectId" element={<Task></Task>}></Route>
-          <Route path="/resources/:TaskId/:ProjectId" element={<Resource></Resource>}></Route>
+
+          <Route path="/tasks/:ProjectId" element={<Task />}></Route>
+          <Route
+            path="/resources/:TaskId/:ProjectId"
+            element={<Resource />}
+          ></Route>
         </Routes>
       </div>
     </div>
