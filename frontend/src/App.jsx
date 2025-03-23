@@ -30,7 +30,7 @@ function App() {
     const token = Cookie.get("token");
     if (!token) {
       setIsLoading(false);
-      console.log("token does not found!!!");
+      // console.log("token does not found!!!");
       return;
     }
 
@@ -44,13 +44,12 @@ function App() {
             },
           })
           .then((res) => {
-            console.log(res.data);
             setIsLogin(true);
           })
           .finally(() => setIsLoading(false));
       } catch (error) {
-        console.log("Authentication error:", error);
-        if (token) console.log("Please Login {Expired Login}");
+        // console.log("Authentication error:", error);
+        if (token) console.log("Please Login {Expired Login}" + error);
       }
     }
     VerifyTheUserToken();
@@ -60,7 +59,6 @@ function App() {
     return <Loading></Loading>
   }
 
-  console.log("App " + isLogin);
 
   return (
     <div className="app w-full relative min-h-screen">

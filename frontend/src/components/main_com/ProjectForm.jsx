@@ -43,33 +43,35 @@ export default function ProjectForm({
       EndDate: end_Date,
       Budget: budget,
     };
+
+    console.log(project);
+    console.log(currentProject);
+
     if (isEdit && currentProject) {
       // Update existing project
       setProjectData(
-        projectData.map((project) =>
-          project.id === currentProject.id
-            ? {
-                ...project,
-                Name: name,
-                Description: description,
-                TaskStage: task_stage,
-                Admins: Admins,
-                StartDate: start_Date,
-                EndDate: end_Date,
-                Budget: budget,
-              }
-            : project
-        )
+        projectData.map((p) => (p._id === currentProject._id ? project : p))
       );
-
-      axios
-        .put(
-          `http://127.0.0.1:3000/project/UpdateProject/${currentProject._id}`,
-          project
-        )
-        .then((res) => {
-          console.log(res.data);
-        });
+      console.log(
+        projectData.map((p) => (p._id === currentProject.id ? project : p))
+      );
+      
+      async function getAndPutProjects() {
+        await axios
+          .put(
+            `http://127.0.0.1:3000/project/UpdateProject/${currentProject._id}`,
+            project
+          )
+          .then((res) => {
+            console.log(res.data);
+          });
+        await axios
+          .get("http://127.0.0.1:3000/project/GetProjects")
+          .then((res) => {
+            setProjectData(res.data);
+          });
+      }
+      getAndPutProjects();
     } else {
       // Create new project
       setProjectData([
@@ -94,10 +96,12 @@ export default function ProjectForm({
             console.log(res.data);
           });
 
-        await axios.get("http://127.0.0.1:3000/project/GetProjects").then((res) => {
-          console.log(res.data);
-          setProjectData(res.data);
-        });
+        await axios
+          .get("http://127.0.0.1:3000/project/GetProjects")
+          .then((res) => {
+            console.log(res.data);
+            setProjectData(res.data);
+          });
       }
       getAndAddProjects();
     }

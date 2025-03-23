@@ -32,8 +32,7 @@ const Auth = ({ isLogin, setIsLogin }) => {
         }
       });
     } catch (error) {
-      alert("Invalid Credentials");
-      console.log(error);
+      alert("Invalid Credentials" + error);
     }
   };
 
@@ -54,11 +53,11 @@ const Auth = ({ isLogin, setIsLogin }) => {
           setActiveTab("login");
         });
     } catch (error) {
-      console.log(error);
-      alert("User Already Exit");
+      // console.log(error);
+      alert("User Already Exit" + error);
     }
   };
-  console.log("Auth " + isLogin);
+  // console.log("Auth " + isLogin);
 
   return (
     <div className="min-h-screen flex relative">

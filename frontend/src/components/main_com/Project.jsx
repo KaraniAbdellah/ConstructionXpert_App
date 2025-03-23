@@ -42,6 +42,7 @@ export default function Project() {
       (project) => project._id === projectId
     );
     setCurrentProject(projectToEdit);
+    console.log(projectToEdit);
   };
 
   useEffect(() => {
@@ -49,7 +50,6 @@ export default function Project() {
       await axios
         .get("http://127.0.0.1:3000/project/GetProjects")
         .then((res) => {
-          console.log(res.data);
           setProjectData(res.data);
         });
     }
@@ -123,8 +123,8 @@ export default function Project() {
               <div className="p-4 space-y-4">
                 <p className="text-gray-600 text-sm">{project.Description}</p>
 
-                <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
-                  <div>
+                <div className="flex flex-col sm:flex-row justify-start items-start gap-4">
+                  <div className="mr-4">
                     <div className="flex items-center gap-2 mb-3 text-gray-700">
                       <Timer size={18} />
                       <div>
@@ -143,7 +143,11 @@ export default function Project() {
                     </div>
                   </div>
                   <div className="flex text-zinc-700 items-center">
-                    <User size={18} className="mr-2" />
+                    {project.Admins.length > 0 ? (
+                      <User size={18} className="mr-2" />
+                    ) : (
+                      <p className="text-sm text-start">no admins</p>
+                    )}
                     <div className="admins flex flex-wrap items-center gap-2">
                       {project.Admins.map((admin, index) => (
                         <p
