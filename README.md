@@ -12,7 +12,7 @@ A construction project management application to help teams organize projects, t
 <img src="home.png">
 
 
-### Features
+### ✨ Features
 
 #### Project Management
 
