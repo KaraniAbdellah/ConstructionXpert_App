@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
-import Loading from "../Loading";
+import Loading from "../Common/Loading";
 import { House } from "lucide-react";
 import { Link } from "react-router";
+import { toast } from 'react-hot-toast';
 
-const Auth = ({ isLogin, setIsLogin }) => {
+
+
+const Auth = ({ setIsLogin }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("login");
   const [Fname, setFname] = useState("");
@@ -26,13 +29,16 @@ const Auth = ({ isLogin, setIsLogin }) => {
     try {
       await axios.post("http://127.0.0.1:3000/user/Login", user).then((res) => {
         if (res.data.token) {
-          setIsLogin(true);
           Cookies.set("token", res.data.token);
-          navigate("/main");
+          toast.success("Login Succefully");
+          setTimeout(() => {
+            setIsLogin(true);
+            navigate("/main");
+          }, 1000);
         }
       });
     } catch (error) {
-      alert("Invalid Credentials" + error);
+      toast.error("Invalid Credentials");
     }
   };
 
@@ -50,7 +56,10 @@ const Auth = ({ isLogin, setIsLogin }) => {
         .post("http://127.0.0.1:3000/user/Register", user)
         .then((res) => {
           console.log(res.data);
-          setActiveTab("login");
+          toast.success("Registration Succefully");
+          setTimeout(() => {
+            setActiveTab("login");
+          }, 1000);
         });
     } catch (error) {
       // console.log(error);

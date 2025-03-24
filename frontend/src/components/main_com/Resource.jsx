@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ResourceForm from "./ResourceForm";
 import { Link } from "react-router";
+import {toast} from "react-hot-toast";
+
 import {
   Wrench,
   Building2,
@@ -15,6 +17,7 @@ import {
   Users,
   Clock,
   CirclePlus,
+  ArrowLeft
 } from "lucide-react";
 import axios from "axios";
 
@@ -79,8 +82,8 @@ export default function Resource() {
       .then((res) => {
         console.log(res.data);
       });
-    
     setResourceData(ResourceData.filter((resource) => resourceId != resource._id));
+    toast.success("Resource Deleted Succefully");
   };
 
   const handleEdit = (resourceId) => {
@@ -99,8 +102,12 @@ export default function Resource() {
   return (
     <div className="p-4">
       <header className="flex p-2 mb-3 justify-between items-center md:items-center rounded-full bg-gray-50 shadow-sm border border-gray-100">
-        <div className="info">
-          <h1 className="text-xl ml-4 font-bold text-gray-800">{Task.Name}</h1>
+        
+        <div className="info ml-4 flex justify-between items-center">
+          <button className="bg-zinc-700 p-2 rounded-full mr-3" onClick={() => window.history.back()}><ArrowLeft className="text-white"></ArrowLeft></button>
+          <h1 className="text-xl font-bold text-gray-800">
+            {Task.Name}
+          </h1>
         </div>
 
         <div className="duration rounded-full bg-zinc-600 px-4 py-3 shadow-md self-start">
@@ -140,7 +147,7 @@ export default function Resource() {
       )}
 
       <div
-        className={`mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ${
+        className={`mt-8 grid mx-2 md:mx-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ${
           RenderResourceFrom
             ? "before:absolute before:bg-zinc-700/50 before:inset-0 before:w-full before:h-full"
             : ""
@@ -168,7 +175,7 @@ export default function Resource() {
                   </span>
                 </div>
 
-                <div className="mb-4">
+                <div>
                   <div className="flex items-center mb-2 text-gray-700">
                     <Package size={16} className="mr-2 text-gray-500" />
                     <span className="font-medium mr-2">Quantity:</span>
@@ -196,7 +203,7 @@ export default function Resource() {
                 </div>
               </div>
 
-              <div className="border-t border-gray-100 p-3 flex justify-end">
+              <div className="border-t border-gray-100 px-3 py-3 flex justify-end">
                 <div className="flex gap-3">
                   <button
                     onClick={() => handleDelete(resource._id)}
@@ -217,6 +224,7 @@ export default function Resource() {
                   </button>
                 </div>
               </div>
+
             </div>
           ))
         ) : (

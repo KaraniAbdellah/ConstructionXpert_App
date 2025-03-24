@@ -1,11 +1,12 @@
 import Home from "./components/Home_Com/Home";
 import { Navigate, Route, Routes } from "react-router";
-import ProctedRoutes from "./components/ProctedRoutes";
+import ProctedRoutes from "./components/Common/ProctedRoutes";
 import Main from "./components/main_com/Main";
 import Auth from "./components/auth/Auth";
 import Task from "./components/main_com/Task";
 import Resource from "./components/main_com/Resource";
-import Loading from "./components/Loading";
+import Loading from "./components/Common/Loading";
+import { Toaster } from "react-hot-toast";
 
 import { useEffect, useState } from "react";
 import AOS from "aos";
@@ -44,6 +45,7 @@ function App() {
             },
           })
           .then((res) => {
+            console.log(res);
             setIsLogin(true);
           })
           .finally(() => setIsLoading(false));
@@ -62,6 +64,15 @@ function App() {
 
   return (
     <div className="app w-full relative min-h-screen">
+      <Toaster
+      position="top-center"
+      toastOptions={
+        {
+          duration: 2000,
+        }
+      }
+      />
+
       <div>
         <Routes>
           <Route
@@ -90,6 +101,8 @@ function App() {
             element={<Resource />}
           ></Route>
         </Routes>
+        <div>
+      </div>
       </div>
     </div>
   );

@@ -9,8 +9,10 @@ import {
   Trash2,
   Info,
   FilePenLine,
+  ArrowLeft 
 } from "lucide-react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Task() {
   const { ProjectId } = useParams();
@@ -50,6 +52,8 @@ export default function Task() {
     axios.delete(`http://127.0.0.1:3000/task/DeleteTask/${id}`).then((res) => {
       console.log(res.data);
     });
+
+    toast.success("Task Deleted Successfully");
   };
 
   const handleEdit = (id) => {
@@ -84,8 +88,9 @@ export default function Task() {
   return (
     <div className="p-4">
       <header className="flex p-2 mb-3 justify-between items-center md:items-center rounded-full bg-gray-50 shadow-sm border border-gray-100">
-        <div className="info">
-          <h1 className="text-xl ml-4 font-bold text-gray-800">
+        <div className="info ml-4 flex justify-between items-center">
+          <button className="bg-zinc-700 p-2 rounded-full mr-3" onClick={() => window.history.back()}><ArrowLeft className="text-white"></ArrowLeft></button>
+          <h1 className="text-xl font-bold text-gray-800">
             {Project.Name}
           </h1>
         </div>
@@ -127,7 +132,7 @@ export default function Task() {
 
       {/* Tasks Details */}
       <div
-        className={`tasks mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ${
+        className={`tasks md:mx-6 mx-2 mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ${
           RenderTaskFrom
             ? "before:absolute before:bg-zinc-700 before:opacity-50 before:top-0 before:left-0 before:w-full before:min-h-screen"
             : ""
@@ -142,7 +147,7 @@ export default function Task() {
     ${RenderTaskFrom ? "z-[-1]" : "z-50"}`}
             >
               <div className="bg-gray-200 p-3 rounded-t-md flex justify-between items-center">
-                <p className="text-zinc-700 text-lg font-bold truncate">
+                <p className="text-zinc-700 text-lg font-semibold truncate">
                   {task.Name}
                 </p>
                 <p

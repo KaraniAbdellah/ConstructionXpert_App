@@ -34,6 +34,7 @@ function TaskForm({
     e.preventDefault();
     setIsSubmitting(true);
 
+    let message = "Task Created Successfully";
     const task = {
       Project: Project._id,
       Name: name,
@@ -45,6 +46,7 @@ function TaskForm({
 
     try {
       if (isEdit && currentTask._id) {
+        message = "Task Updated Successfully";
         await axios.put(
           `http://127.0.0.1:3000/task/UpdateTask/${currentTask._id}`,
           task
@@ -55,6 +57,7 @@ function TaskForm({
             item._id === currentTask._id ? { ...task, _id: currentTask._id } : item
           )
         );
+        toast.success(message);
       } else {
         const response = await axios.post(
           "http://127.0.0.1:3000/task/AddTask", 
@@ -62,6 +65,7 @@ function TaskForm({
         );
         const newTask = { ...task, _id: response.data._id };
         setTaskData(prevTasks => [...prevTasks, newTask]);
+        toast.success(message);
       }
       
       setRenderTaskFrom(false);

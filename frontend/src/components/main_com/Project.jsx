@@ -12,6 +12,7 @@ import {
   User,
   Info,
 } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function Project() {
   const [RenderProjectFrom, setRenderProjectFrom] = useState(false);
@@ -33,6 +34,8 @@ export default function Project() {
       });
 
     setProjectData(projectData.filter((project) => project._id !== projectId));
+
+    toast.success("Project Deleted Successfully");
   };
 
   const handleEdit = (projectId) => {
@@ -65,7 +68,7 @@ export default function Project() {
       }`}
     >
       <header className="bg-gray-100 p-2 rounded-full flex justify-between items-center">
-        <p className="title font-semibold text-lg ml-3">Projects</p>
+        <p className="title font-bold text-lg ml-3">Projects</p>
         <button
           onClick={() => RenderProjectFromFun()}
           className={`title bg-zinc-600 flex justify-center items-center mr-3 text-sm p-3 rounded-full text-white font-semibold 
@@ -92,7 +95,7 @@ export default function Project() {
 
       {/* Project Details */}
 
-      <div className="projects mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="projects md:mx-6 mx-2 mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {projectData.length > 0 ? (
           projectData.map((project, index) => (
             <div
@@ -102,7 +105,7 @@ export default function Project() {
         ${RenderProjectFrom ? "z-[-1]" : "z-0"}`}
             >
               <div className="bg-gray-200 p-3 rounded-t-md flex justify-between items-center">
-                <p className="text-zinc-700 text-lg font-bold truncate">
+                <p className="text-zinc-700 text-lg font-semibold truncate">
                   {project.Name}
                 </p>
                 <p

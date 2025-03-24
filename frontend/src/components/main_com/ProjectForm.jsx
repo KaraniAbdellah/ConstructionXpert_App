@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {toast} from "react-hot-toast";
 
 export default function ProjectForm({
   setRenderProjectFrom,
@@ -33,6 +34,7 @@ export default function ProjectForm({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let message = "Project Created Successfully";
 
     const project = {
       Name: name,
@@ -48,6 +50,7 @@ export default function ProjectForm({
     console.log(currentProject);
 
     if (isEdit && currentProject) {
+      message = "Project Updated Successfully";
       // Update existing project
       setProjectData(
         projectData.map((p) => (p._id === currentProject._id ? project : p))
@@ -72,6 +75,7 @@ export default function ProjectForm({
           });
       }
       getAndPutProjects();
+      
     } else {
       // Create new project
       setProjectData([
@@ -107,6 +111,7 @@ export default function ProjectForm({
     }
 
     // Close form after submission
+    toast.success(message);
     setRenderProjectFrom(false);
   };
 

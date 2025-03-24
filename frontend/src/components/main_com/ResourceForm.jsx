@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Resource from "./Resource";
+import toast from "react-hot-toast";
 
 function ResourceForm({
   ResourceData,
@@ -58,6 +59,7 @@ function ResourceForm({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let message = "Resource Created Succefully";
 
     const resource = {
       Name: name,
@@ -68,23 +70,30 @@ function ResourceForm({
       Project: ProjectId,
     };
 
-    console.log(resource);
     if (isEdit) {
+      message = "Resource Updated Succefully"
       axios.put(`http://127.0.0.1:3000/resource/UpdateResource/${currentResource._id}`, resource).then((res) => {
         console.log(res.data);
       });
       setResourceData(ResourceData.map((rsc) => (rsc._id === currentResource._id ? resource: rsc)));
     } else {
-      axios
-        .post("http://127.0.0.1:3000/resource/AddResource", resource)
-        .then((res) => {
-          console.log(res.data);
-        });
-
-      setResourceData((resources) => [...resources, resource]);
+      async function GetAndPostResource() {
+        await axios
+          .post("http://127.0.0.1:3000/resource/AddResource", resource)
+          .then((res) => {
+            console.log(res.data);
+          });
+          await axios
+          .get(`http://127.0.0.1:3000/resource/GetResource/${TaskId}`, resource)
+          .then((res) => {
+            setResourceData(res.data);
+          });
+      }
+      GetAndPostResource();
     }
     setIsEdit(false);
     setRenderResourceForm(false);
+    toast.success(message);
   };
 
   const handleCancel = () => {
