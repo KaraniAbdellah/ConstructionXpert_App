@@ -42,7 +42,7 @@ const FAQ = () => {
   return (
     <>
         <Header></Header>
-        <div className="w-full pt-40 max-w-3xl mx-auto p-6 rounded-lg">
+        <div className="w-full pt-40 max-w-3xl mx-auto p-6  rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-zinc-800">ConstructionXpert Services - Frequently Asked Questions</h2>
         
         <div className="space-y-4">

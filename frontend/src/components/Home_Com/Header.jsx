@@ -22,12 +22,14 @@ const Header = ({ isLogin, setIsLogin }) => {
           />
         </div>
         <nav className="flex space-x-6 items-center">
-          <button
-            onClick={() => window.scroll(0, 0)}
-            className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center"
-          >
-            Home
-          </button>
+          <Link to="/">
+            <button
+              onClick={() => window.scroll(0, 0)}
+              className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center"
+            >
+              Home
+            </button>
+          </Link>
           <Link to="/faq">
             <button className="font-medium text-gray-800 hover:text-zinc-700 transition-all flex items-center">
               FAQ
