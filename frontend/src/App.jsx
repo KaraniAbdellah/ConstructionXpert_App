@@ -6,6 +6,8 @@ import Auth from "./components/auth/Auth";
 import Task from "./components/main_com/Task";
 import Resource from "./components/main_com/Resource";
 import Loading from "./components/Common/Loading";
+import FAQ from "./components/Common/FAQ";
+import Pricing from "./components/Common/Pricing";
 import { Toaster } from "react-hot-toast";
 
 import { useEffect, useState } from "react";
@@ -19,6 +21,7 @@ import Cookie from "js-cookie";
 // Import Css Filies
 import "./css_styles/bg.css";
 import "./css_styles/loading.css";
+import { Heading1 } from "lucide-react";
 
 
 function App() {
@@ -100,6 +103,9 @@ function App() {
             path="/resources/:TaskId/:ProjectId"
             element={<Resource />}
           ></Route>
+
+          <Route path="/faq" element={<FAQ>Hello FAQ</FAQ>}></Route>
+          <Route path="/pricing" element={<Pricing>Hello Pricing</Pricing>}></Route>
         </Routes>
         <div>
       </div>
