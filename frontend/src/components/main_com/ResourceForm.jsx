@@ -157,8 +157,8 @@ function ResourceForm({
           >
             Quantity
           </label>
-          <input
-            type="text"
+          <inputss
+            type="number"
             id="Quantity"
             name="Quantity"
             value={quantity}

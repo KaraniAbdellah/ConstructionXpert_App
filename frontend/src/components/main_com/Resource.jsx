@@ -104,7 +104,7 @@ export default function Resource() {
       <header className="flex p-2 mb-3 justify-between items-center md:items-center rounded-full bg-gray-50 shadow-sm border border-gray-100">
         
         <div className="info ml-4 flex justify-between items-center">
-          <button className="bg-zinc-700 p-2 rounded-full mr-3" onClick={() => window.history.back()}><ArrowLeft className="text-white"></ArrowLeft></button>
+          <button className="bg-zinc-600 p-2 rounded-full mr-3 hover:bg-zinc-700" onClick={() => window.history.back()}><ArrowLeft className="text-white"></ArrowLeft></button>
           <h1 className="text-xl font-bold text-gray-800">
             {Task.Name}
           </h1>
