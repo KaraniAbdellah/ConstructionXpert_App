@@ -38,7 +38,7 @@ const FAQ = () => {
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
-
+  
   return (
     <>
         <Header></Header>
