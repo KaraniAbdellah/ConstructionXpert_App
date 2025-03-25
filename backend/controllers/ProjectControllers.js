@@ -16,9 +16,17 @@ const createProject = async (req, res) => {
 
 const GetProjects = async (req, res) => {
     try {
-        const projects = await ProjectModel.find();
+        let projects = await ProjectModel.find();
+        
+        // projects = await Promise.all(projects.map(async (project) => {
+        //     const taskCount = await TaskModel.countDocuments({ Project: project._id });
+        //     const projectObject = project.toObject();
+        //     projectObject.NumberOfTasks = taskCount;
+        //     return projectObject;
+        // }));
+        // console.log(projects);
+
         res.status(200).send(projects);
-        console.log("✅ Getting Projects Succefully");
     } catch (error) {
         console.log("❌ Failed Getting Project" + error);
         res.status(400).send({message: "❌ Failed Getting Project" + error});
@@ -68,6 +76,7 @@ const DeleteProject = async (req, res) => {
 const GetProjectById = async (req, res) => {
     try {
         const project = await ProjectModel.findById(req.params.id);
+
         res.status(200).send(project);
         console.log("✅ Getting Projects Succefully");
     } catch (error) {
