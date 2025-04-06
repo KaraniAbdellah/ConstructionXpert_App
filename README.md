@@ -76,9 +76,9 @@ JWT_SECRET=your_secret_key
 
 ```bash
 # Start backend
-cd backend && npm start
+cd backend && nodemon server.js
 # Start frontend
-cd frontend && npm start
+cd frontend && npm run dev
 ```
 
 ### 👥 Author
